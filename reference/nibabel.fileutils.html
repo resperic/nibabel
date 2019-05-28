@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="keywordonly" href="nibabel.keywordonly.html" />
+    <link rel="prev" title="filebasedimages" href="nibabel.filebasedimages.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.keywordonly.html" title="keywordonly"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.filebasedimages.html" title="filebasedimages"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" >API Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileutils</span></code></a><ul>
+<li><a class="reference internal" href="#read-zt-byte-strings">read_zt_byte_strings</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.filebasedimages.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">filebasedimages</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.keywordonly.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keywordonly</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.fileutils.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.fileutils">
+<span id="fileutils"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileutils</span></code><a class="headerlink" href="#module-nibabel.fileutils" title="Permalink to this headline">¶</a></h1>
+<p>Utilities for reading and writing to binary file formats</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.fileutils.read_zt_byte_strings" title="nibabel.fileutils.read_zt_byte_strings"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read_zt_byte_strings</span></code></a>(fobj[, n_strings, bufsize])</p></td>
+<td><p>Read zero-terminated byte strings from a file object <cite>fobj</cite></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="read-zt-byte-strings">
+<h2>read_zt_byte_strings<a class="headerlink" href="#read-zt-byte-strings" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.fileutils.read_zt_byte_strings">
+<code class="descclassname">nibabel.fileutils.</code><code class="descname">read_zt_byte_strings</code><span class="sig-paren">(</span><em>fobj</em>, <em>n_strings=1</em>, <em>bufsize=1024</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.fileutils.read_zt_byte_strings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read zero-terminated byte strings from a file object <cite>fobj</cite></p>
+<p>Returns byte strings with terminal zero stripped.</p>
+<p>Found strings can be of any length.</p>
+<p>The file position of <cite>fobj</cite> on exit will be at the byte after the terminal
+0 of the final read byte string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>f</strong><span class="classifier">fileobj</span></dt><dd><p>File object to use.  Should implement <code class="docutils literal notranslate"><span class="pre">read</span></code>, returning byte objects
+(str in Python 2), and <code class="docutils literal notranslate"><span class="pre">seek(n,</span> <span class="pre">1)</span></code> to seek from current file
+position.</p>
+</dd>
+<dt><strong>n_strings</strong><span class="classifier">int, optional</span></dt><dd><p>Number of byte strings to return</p>
+</dd>
+<dt><strong>bufsize: int, optional</strong></dt><dd><p>Define chunk size to load from file while searching for zero terminals.
+We load this many bytes at a time from the file, but the returned
+strings can be longer than <cite>bufsize</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>byte_strings</strong><span class="classifier">list</span></dt><dd><p>List of byte strings, where strings do not include the terminal 0</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

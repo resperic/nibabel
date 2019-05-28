@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="wrapstruct" href="nibabel.wrapstruct.html" />
+    <link rel="prev" title="tmpdirs" href="nibabel.tmpdirs.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.wrapstruct.html" title="wrapstruct"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.tmpdirs.html" title="tmpdirs"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" accesskey="U">API Documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tripwire</span></code></a><ul>
+<li><a class="reference internal" href="#id1"><code class="xref py py-class docutils literal notranslate"><span class="pre">TripWire</span></code></a></li>
+<li><a class="reference internal" href="#tripwireerror"><code class="xref py py-class docutils literal notranslate"><span class="pre">TripWireError</span></code></a></li>
+<li><a class="reference internal" href="#is-tripwire">is_tripwire</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.tmpdirs.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tmpdirs</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.wrapstruct.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wrapstruct</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.tripwire.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.tripwire">
+<span id="tripwire"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">tripwire</span></code><a class="headerlink" href="#module-nibabel.tripwire" title="Permalink to this headline">¶</a></h1>
+<p>Class to raise error for missing modules or other misfortunes</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.tripwire.TripWire" title="nibabel.tripwire.TripWire"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TripWire</span></code></a>(msg)</p></td>
+<td><p>Class raising error if used</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.tripwire.TripWireError" title="nibabel.tripwire.TripWireError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TripWireError</span></code></a></p></td>
+<td><p>Exception if trying to use TripWire object</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.tripwire.is_tripwire" title="nibabel.tripwire.is_tripwire"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_tripwire</span></code></a>(obj)</p></td>
+<td><p>Returns True if <cite>obj</cite> appears to be a TripWire object</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id1">
+<h2><a class="reference internal" href="#nibabel.tripwire.TripWire" title="nibabel.tripwire.TripWire"><code class="xref py py-class docutils literal notranslate"><span class="pre">TripWire</span></code></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.tripwire.TripWire">
+<em class="property">class </em><code class="descclassname">nibabel.tripwire.</code><code class="descname">TripWire</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.tripwire.TripWire" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class raising error if used</p>
+<p>Standard use is to proxy modules that we could not import</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a_module</span> <span class="o">=</span> <span class="n">TripWire</span><span class="p">(</span><span class="s1">&#39;We do not have a_module&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a_module</span><span class="o">.</span><span class="n">do_silly_thing</span><span class="p">(</span><span class="s1">&#39;with silly string&#39;</span><span class="p">)</span> <span class="c1">#doctest: +IGNORE_EXCEPTION_DETAIL</span>
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">TripWireError</span>: <span class="n">We do not have a_module</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="nibabel.tripwire.TripWire.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>msg</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.tripwire.TripWire.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="tripwireerror">
+<h2><a class="reference internal" href="#nibabel.tripwire.TripWireError" title="nibabel.tripwire.TripWireError"><code class="xref py py-class docutils literal notranslate"><span class="pre">TripWireError</span></code></a><a class="headerlink" href="#tripwireerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.tripwire.TripWireError">
+<em class="property">class </em><code class="descclassname">nibabel.tripwire.</code><code class="descname">TripWireError</code><a class="headerlink" href="#nibabel.tripwire.TripWireError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">AttributeError</span></code></p>
+<p>Exception if trying to use TripWire object</p>
+<dl class="method">
+<dt id="nibabel.tripwire.TripWireError.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.tripwire.TripWireError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="is-tripwire">
+<h2>is_tripwire<a class="headerlink" href="#is-tripwire" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.tripwire.is_tripwire">
+<code class="descclassname">nibabel.tripwire.</code><code class="descname">is_tripwire</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.tripwire.is_tripwire" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if <cite>obj</cite> appears to be a TripWire object</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_tripwire</span><span class="p">(</span><span class="nb">object</span><span class="p">())</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_tripwire</span><span class="p">(</span><span class="n">TripWire</span><span class="p">(</span><span class="s1">&#39;some message&#39;</span><span class="p">))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

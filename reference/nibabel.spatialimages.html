@@ -1,0 +1,755 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="volumeutils" href="nibabel.volumeutils.html" />
+    <link rel="prev" title="quaternions" href="nibabel.quaternions.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.volumeutils.html" title="volumeutils"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.quaternions.html" title="quaternions"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" accesskey="U">API Documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">spatialimages</span></code></a><ul>
+<li><a class="reference internal" href="#there-are-several-ways-of-writing-data">There are several ways of writing data.</a></li>
+<li><a class="reference internal" href="#files-interface">Files interface</a></li>
+<li><a class="reference internal" href="#header"><code class="xref py py-class docutils literal notranslate"><span class="pre">Header</span></code></a></li>
+<li><a class="reference internal" href="#headerdataerror"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderDataError</span></code></a></li>
+<li><a class="reference internal" href="#headertypeerror"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderTypeError</span></code></a></li>
+<li><a class="reference internal" href="#imagedataerror"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageDataError</span></code></a></li>
+<li><a class="reference internal" href="#spatialfirstslicer"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpatialFirstSlicer</span></code></a></li>
+<li><a class="reference internal" href="#spatialheader"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpatialHeader</span></code></a></li>
+<li><a class="reference internal" href="#spatialimage"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpatialImage</span></code></a></li>
+<li><a class="reference internal" href="#supported-np-types">supported_np_types</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.quaternions.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quaternions</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.volumeutils.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">volumeutils</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.spatialimages.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.spatialimages">
+<span id="spatialimages"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">spatialimages</span></code><a class="headerlink" href="#module-nibabel.spatialimages" title="Permalink to this headline">¶</a></h1>
+<p>A simple spatial image class</p>
+<p>The image class maintains the association between a 3D (or greater)
+array, and an affine transform that maps voxel coordinates to some world space.
+It also has a <code class="docutils literal notranslate"><span class="pre">header</span></code> - some standard set of meta-data that is specific to
+the image format, and <code class="docutils literal notranslate"><span class="pre">extra</span></code> - a dictionary container for any other
+metadata.</p>
+<p>It has attributes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>extra</p></li>
+</ul>
+</div></blockquote>
+<p>methods:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>.get_data()</p></li>
+<li><p>.get_affine() (deprecated, use affine property instead)</p></li>
+<li><p>.get_header() (deprecated, use header property instead)</p></li>
+<li><p>.to_filename(fname) - writes data to filename(s) derived from
+<code class="docutils literal notranslate"><span class="pre">fname</span></code>, where the derivation may differ between formats.</p></li>
+<li><p>to_file_map() - save image to files with which the image is already
+associated.</p></li>
+<li><p>.get_shape() (deprecated)</p></li>
+</ul>
+</div></blockquote>
+<p>properties:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>shape</p></li>
+<li><p>affine</p></li>
+<li><p>header</p></li>
+<li><p>dataobj</p></li>
+</ul>
+</div></blockquote>
+<p>classmethods:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>from_filename(fname) - make instance by loading from filename</p></li>
+<li><p>from_file_map(fmap) - make instance from file map</p></li>
+<li><p>instance_to_filename(img, fname) - save <code class="docutils literal notranslate"><span class="pre">img</span></code> instance to
+filename <code class="docutils literal notranslate"><span class="pre">fname</span></code>.</p></li>
+</ul>
+</div></blockquote>
+<p>You cannot slice an image, and trying to slice an image generates an
+informative TypeError.</p>
+<div class="section" id="there-are-several-ways-of-writing-data">
+<h2>There are several ways of writing data.<a class="headerlink" href="#there-are-several-ways-of-writing-data" title="Permalink to this headline">¶</a></h2>
+<p>There is the usual way, which is the default:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">img</span><span class="o">.</span><span class="n">to_filename</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>and that is, to take the data encapsulated by the image and cast it to
+the datatype the header expects, setting any available header scaling
+into the header to help the data match.</p>
+<p>You can load the data into an image from file with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">img</span><span class="o">.</span><span class="n">from_filename</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The image stores its associated files in its <code class="docutils literal notranslate"><span class="pre">file_map</span></code> attribute.  In order
+to just save an image, for which you know there is an associated filename, or
+other storage, you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">img</span><span class="o">.</span><span class="n">to_file_map</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You can get the data out again with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">img</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Less commonly, for some image types that support it, you might want to
+fetch out the unscaled array via the object containing the data:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">unscaled_data</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">dataoobj</span><span class="o">.</span><span class="n">get_unscaled</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Analyze-type images (including nifti) support this, but others may not
+(MINC, for example).</p>
+<p>Sometimes you might to avoid any loss of precision by making the
+data type the same as the input:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hdr</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">header</span>
+<span class="n">hdr</span><span class="o">.</span><span class="n">set_data_dtype</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="n">img</span><span class="o">.</span><span class="n">to_filename</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="files-interface">
+<h2>Files interface<a class="headerlink" href="#files-interface" title="Permalink to this headline">¶</a></h2>
+<p>The image has an attribute <code class="docutils literal notranslate"><span class="pre">file_map</span></code>.  This is a mapping, that has keys
+corresponding to the file types that an image needs for storage.  For
+example, the Analyze data format needs an <code class="docutils literal notranslate"><span class="pre">image</span></code> and a <code class="docutils literal notranslate"><span class="pre">header</span></code>
+file type for storage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">nibabel</span> <span class="k">as</span> <span class="nn">nib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;f4&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">AnalyzeImage</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">sorted</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">file_map</span><span class="p">)</span>
+<span class="go">[&#39;header&#39;, &#39;image&#39;]</span>
+</pre></div>
+</div>
+<p>The values of <code class="docutils literal notranslate"><span class="pre">file_map</span></code> are not in fact files but objects with
+attributes <code class="docutils literal notranslate"><span class="pre">filename</span></code>, <code class="docutils literal notranslate"><span class="pre">fileobj</span></code> and <code class="docutils literal notranslate"><span class="pre">pos</span></code>.</p>
+<p>The reason for this interface, is that the contents of files has to
+contain enough information so that an existing image instance can save
+itself back to the files pointed to in <code class="docutils literal notranslate"><span class="pre">file_map</span></code>.  When a file holder
+holds active file-like objects, then these may be affected by the
+initial file read; in this case, the contains file-like objects need to
+carry the position at which a write (with <code class="docutils literal notranslate"><span class="pre">to_files</span></code>) should place the
+data.  The <code class="docutils literal notranslate"><span class="pre">file_map</span></code> contents should therefore be such, that this will
+work:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># write an image to files</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">BytesIO</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">nibabel</span> <span class="k">as</span> <span class="nn">nib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">file_map</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">AnalyzeImage</span><span class="o">.</span><span class="n">make_file_map</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">file_map</span><span class="p">[</span><span class="s1">&#39;image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fileobj</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">file_map</span><span class="p">[</span><span class="s1">&#39;header&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fileobj</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">AnalyzeImage</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">file_map</span> <span class="o">=</span> <span class="n">file_map</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">to_file_map</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># read it back again from the written files</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img2</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">AnalyzeImage</span><span class="o">.</span><span class="n">from_file_map</span><span class="p">(</span><span class="n">file_map</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">img2</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span> <span class="o">==</span> <span class="n">data</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># write, read it again</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img2</span><span class="o">.</span><span class="n">to_file_map</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img3</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">AnalyzeImage</span><span class="o">.</span><span class="n">from_file_map</span><span class="p">(</span><span class="n">file_map</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">img3</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span> <span class="o">==</span> <span class="n">data</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.spatialimages.Header" title="nibabel.spatialimages.Header"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Header</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Alias for SpatialHeader; kept for backwards compatibility.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.spatialimages.HeaderDataError" title="nibabel.spatialimages.HeaderDataError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HeaderDataError</span></code></a></p></td>
+<td><p>Class to indicate error in getting or setting header data</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.spatialimages.HeaderTypeError" title="nibabel.spatialimages.HeaderTypeError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HeaderTypeError</span></code></a></p></td>
+<td><p>Class to indicate error in parameters into header functions</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.spatialimages.ImageDataError" title="nibabel.spatialimages.ImageDataError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageDataError</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.spatialimages.SpatialFirstSlicer" title="nibabel.spatialimages.SpatialFirstSlicer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SpatialFirstSlicer</span></code></a>(img)</p></td>
+<td><p>Slicing interface that returns a new image with an updated affine</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.spatialimages.SpatialHeader" title="nibabel.spatialimages.SpatialHeader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SpatialHeader</span></code></a>([data_dtype, shape, zooms])</p></td>
+<td><p>Template class to implement header protocol</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.spatialimages.SpatialImage" title="nibabel.spatialimages.SpatialImage"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SpatialImage</span></code></a>(dataobj, affine[, header, …])</p></td>
+<td><p>Template class for volumetric (3D/4D) images</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.spatialimages.supported_np_types" title="nibabel.spatialimages.supported_np_types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">supported_np_types</span></code></a>(obj)</p></td>
+<td><p>Numpy data types that instance <cite>obj</cite> supports</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="header">
+<h2><a class="reference internal" href="#nibabel.spatialimages.Header" title="nibabel.spatialimages.Header"><code class="xref py py-class docutils literal notranslate"><span class="pre">Header</span></code></a><a class="headerlink" href="#header" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.spatialimages.Header">
+<em class="property">class </em><code class="descclassname">nibabel.spatialimages.</code><code class="descname">Header</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.Header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nibabel.spatialimages.SpatialHeader" title="nibabel.spatialimages.SpatialHeader"><code class="xref py py-class docutils literal notranslate"><span class="pre">nibabel.spatialimages.SpatialHeader</span></code></a></p>
+<p>Alias for SpatialHeader; kept for backwards compatibility.</p>
+<p>Header class is deprecated.
+Please use SpatialHeader instead.instead.</p>
+<ul class="simple">
+<li><p>deprecated from version: 2.1</p></li>
+<li><p>Will raise &lt;class ‘nibabel.deprecator.ExpiredDeprecationError’&gt; as of version: 4.0</p></li>
+</ul>
+<dl class="method">
+<dt id="nibabel.spatialimages.Header.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.Header.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Header class is deprecated.
+Please use SpatialHeader instead.instead.</p>
+<ul class="simple">
+<li><p>deprecated from version: 2.1</p></li>
+<li><p>Will raise &lt;class ‘nibabel.deprecator.ExpiredDeprecationError’&gt; as of version: 4.0</p></li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="headerdataerror">
+<h2><a class="reference internal" href="#nibabel.spatialimages.HeaderDataError" title="nibabel.spatialimages.HeaderDataError"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderDataError</span></code></a><a class="headerlink" href="#headerdataerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.spatialimages.HeaderDataError">
+<em class="property">class </em><code class="descclassname">nibabel.spatialimages.</code><code class="descname">HeaderDataError</code><a class="headerlink" href="#nibabel.spatialimages.HeaderDataError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Class to indicate error in getting or setting header data</p>
+<dl class="method">
+<dt id="nibabel.spatialimages.HeaderDataError.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.HeaderDataError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="headertypeerror">
+<h2><a class="reference internal" href="#nibabel.spatialimages.HeaderTypeError" title="nibabel.spatialimages.HeaderTypeError"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderTypeError</span></code></a><a class="headerlink" href="#headertypeerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.spatialimages.HeaderTypeError">
+<em class="property">class </em><code class="descclassname">nibabel.spatialimages.</code><code class="descname">HeaderTypeError</code><a class="headerlink" href="#nibabel.spatialimages.HeaderTypeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Class to indicate error in parameters into header functions</p>
+<dl class="method">
+<dt id="nibabel.spatialimages.HeaderTypeError.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.HeaderTypeError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="imagedataerror">
+<h2><a class="reference internal" href="#nibabel.spatialimages.ImageDataError" title="nibabel.spatialimages.ImageDataError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageDataError</span></code></a><a class="headerlink" href="#imagedataerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.spatialimages.ImageDataError">
+<em class="property">class </em><code class="descclassname">nibabel.spatialimages.</code><code class="descname">ImageDataError</code><a class="headerlink" href="#nibabel.spatialimages.ImageDataError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<dl class="method">
+<dt id="nibabel.spatialimages.ImageDataError.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.ImageDataError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="spatialfirstslicer">
+<h2><a class="reference internal" href="#nibabel.spatialimages.SpatialFirstSlicer" title="nibabel.spatialimages.SpatialFirstSlicer"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpatialFirstSlicer</span></code></a><a class="headerlink" href="#spatialfirstslicer" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.spatialimages.SpatialFirstSlicer">
+<em class="property">class </em><code class="descclassname">nibabel.spatialimages.</code><code class="descname">SpatialFirstSlicer</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialFirstSlicer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Slicing interface that returns a new image with an updated affine</p>
+<p>Checks that an image’s first three axes are spatial</p>
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialFirstSlicer.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialFirstSlicer.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialFirstSlicer.check_slicing">
+<code class="descname">check_slicing</code><span class="sig-paren">(</span><em>slicer</em>, <em>return_spatial=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialFirstSlicer.check_slicing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Canonicalize slicers and check for scalar indices in spatial dims</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>slicer</strong><span class="classifier">object</span></dt><dd><p>something that can be used to slice an array as in
+<code class="docutils literal notranslate"><span class="pre">arr[sliceobj]</span></code></p>
+</dd>
+<dt><strong>return_spatial</strong><span class="classifier">bool</span></dt><dd><p>return only slices along spatial dimensions (x, y, z)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>slicer</strong><span class="classifier">object</span></dt><dd><p>Validated slicer object that will slice image’s <cite>dataobj</cite>
+without collapsing spatial dimensions</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialFirstSlicer.slice_affine">
+<code class="descname">slice_affine</code><span class="sig-paren">(</span><em>slicer</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialFirstSlicer.slice_affine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve affine for current image, if sliced by a given index</p>
+<p>Applies scaling if down-sampling is applied, and adjusts the intercept
+to account for any cropping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>slicer</strong><span class="classifier">object</span></dt><dd><p>something that can be used to slice an array as in
+<code class="docutils literal notranslate"><span class="pre">arr[sliceobj]</span></code></p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>affine</strong><span class="classifier">(4,4) ndarray</span></dt><dd><p>Affine with updated scale and intercept</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="spatialheader">
+<h2><a class="reference internal" href="#nibabel.spatialimages.SpatialHeader" title="nibabel.spatialimages.SpatialHeader"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpatialHeader</span></code></a><a class="headerlink" href="#spatialheader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.spatialimages.SpatialHeader">
+<em class="property">class </em><code class="descclassname">nibabel.spatialimages.</code><code class="descname">SpatialHeader</code><span class="sig-paren">(</span><em>data_dtype=&lt;class 'numpy.float32'&gt;</em>, <em>shape=(0</em>, <em>)</em>, <em>zooms=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.filebasedimages.html#nibabel.filebasedimages.FileBasedHeader" title="nibabel.filebasedimages.FileBasedHeader"><code class="xref py py-class docutils literal notranslate"><span class="pre">nibabel.filebasedimages.FileBasedHeader</span></code></a></p>
+<p>Template class to implement header protocol</p>
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialHeader.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>data_dtype=&lt;class 'numpy.float32'&gt;</em>, <em>shape=(0</em>, <em>)</em>, <em>zooms=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialHeader.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy object to independent representation</p>
+<p>The copy should not be affected by any changes to the original
+object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialHeader.data_from_fileobj">
+<code class="descname">data_from_fileobj</code><span class="sig-paren">(</span><em>fileobj</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.data_from_fileobj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read binary image data from <cite>fileobj</cite></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.spatialimages.SpatialHeader.data_layout">
+<code class="descname">data_layout</code><em class="property"> = 'F'</em><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.data_layout" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialHeader.data_to_fileobj">
+<code class="descname">data_to_fileobj</code><span class="sig-paren">(</span><em>data</em>, <em>fileobj</em>, <em>rescale=True</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.data_to_fileobj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write array data <cite>data</cite> as binary to <cite>fileobj</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data</strong><span class="classifier">array-like</span></dt><dd><p>data to write</p>
+</dd>
+<dt><strong>fileobj</strong><span class="classifier">file-like object</span></dt><dd><p>file-like object implementing ‘write’</p>
+</dd>
+<dt><strong>rescale</strong><span class="classifier">{True, False}, optional</span></dt><dd><p>Whether to try and rescale data to match output dtype specified by
+header. For this minimal header, <cite>rescale</cite> has no effect</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.spatialimages.SpatialHeader.default_x_flip">
+<code class="descname">default_x_flip</code><em class="property"> = True</em><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.default_x_flip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="nibabel.spatialimages.SpatialHeader.from_fileobj">
+<em class="property">classmethod </em><code class="descname">from_fileobj</code><span class="sig-paren">(</span><em>fileobj</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.from_fileobj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="nibabel.spatialimages.SpatialHeader.from_header">
+<em class="property">classmethod </em><code class="descname">from_header</code><span class="sig-paren">(</span><em>header=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.from_header" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialHeader.get_base_affine">
+<code class="descname">get_base_affine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.get_base_affine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialHeader.get_best_affine">
+<code class="descname">get_best_affine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.get_best_affine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialHeader.get_data_dtype">
+<code class="descname">get_data_dtype</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.get_data_dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialHeader.get_data_shape">
+<code class="descname">get_data_shape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.get_data_shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialHeader.get_zooms">
+<code class="descname">get_zooms</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.get_zooms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialHeader.set_data_dtype">
+<code class="descname">set_data_dtype</code><span class="sig-paren">(</span><em>dtype</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.set_data_dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialHeader.set_data_shape">
+<code class="descname">set_data_shape</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.set_data_shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialHeader.set_zooms">
+<code class="descname">set_zooms</code><span class="sig-paren">(</span><em>zooms</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.set_zooms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialHeader.write_to">
+<code class="descname">write_to</code><span class="sig-paren">(</span><em>fileobj</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialHeader.write_to" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="spatialimage">
+<h2><a class="reference internal" href="#nibabel.spatialimages.SpatialImage" title="nibabel.spatialimages.SpatialImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpatialImage</span></code></a><a class="headerlink" href="#spatialimage" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.spatialimages.SpatialImage">
+<em class="property">class </em><code class="descclassname">nibabel.spatialimages.</code><code class="descname">SpatialImage</code><span class="sig-paren">(</span><em>dataobj</em>, <em>affine</em>, <em>header=None</em>, <em>extra=None</em>, <em>file_map=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialImage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.dataobj_images.html#nibabel.dataobj_images.DataobjImage" title="nibabel.dataobj_images.DataobjImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">nibabel.dataobj_images.DataobjImage</span></code></a></p>
+<p>Template class for volumetric (3D/4D) images</p>
+<p>Initialize image</p>
+<p>The image is a combination of (array-like, affine matrix, header), with
+optional metadata in <cite>extra</cite>, and filename / file-like objects
+contained in the <cite>file_map</cite> mapping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dataobj</strong><span class="classifier">object</span></dt><dd><p>Object containg image data.  It should be some object that retuns an
+array from <code class="docutils literal notranslate"><span class="pre">np.asanyarray</span></code>.  It should have a <code class="docutils literal notranslate"><span class="pre">shape</span></code> attribute
+or property</p>
+</dd>
+<dt><strong>affine</strong><span class="classifier">None or (4,4) array-like</span></dt><dd><p>homogenous affine giving relationship between voxel coordinates and
+world coordinates.  Affine can also be None.  In this case,
+<code class="docutils literal notranslate"><span class="pre">obj.affine</span></code> also returns None, and the affine as written to disk
+will depend on the file format.</p>
+</dd>
+<dt><strong>header</strong><span class="classifier">None or mapping or header instance, optional</span></dt><dd><p>metadata for this image format</p>
+</dd>
+<dt><strong>extra</strong><span class="classifier">None or mapping, optional</span></dt><dd><p>metadata to associate with image that cannot be stored in the
+metadata of this image type</p>
+</dd>
+<dt><strong>file_map</strong><span class="classifier">mapping, optional</span></dt><dd><p>mapping giving file information for this image format</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialImage.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>dataobj</em>, <em>affine</em>, <em>header=None</em>, <em>extra=None</em>, <em>file_map=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialImage.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize image</p>
+<p>The image is a combination of (array-like, affine matrix, header), with
+optional metadata in <cite>extra</cite>, and filename / file-like objects
+contained in the <cite>file_map</cite> mapping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dataobj</strong><span class="classifier">object</span></dt><dd><p>Object containg image data.  It should be some object that retuns an
+array from <code class="docutils literal notranslate"><span class="pre">np.asanyarray</span></code>.  It should have a <code class="docutils literal notranslate"><span class="pre">shape</span></code> attribute
+or property</p>
+</dd>
+<dt><strong>affine</strong><span class="classifier">None or (4,4) array-like</span></dt><dd><p>homogenous affine giving relationship between voxel coordinates and
+world coordinates.  Affine can also be None.  In this case,
+<code class="docutils literal notranslate"><span class="pre">obj.affine</span></code> also returns None, and the affine as written to disk
+will depend on the file format.</p>
+</dd>
+<dt><strong>header</strong><span class="classifier">None or mapping or header instance, optional</span></dt><dd><p>metadata for this image format</p>
+</dd>
+<dt><strong>extra</strong><span class="classifier">None or mapping, optional</span></dt><dd><p>metadata to associate with image that cannot be stored in the
+metadata of this image type</p>
+</dd>
+<dt><strong>file_map</strong><span class="classifier">mapping, optional</span></dt><dd><p>mapping giving file information for this image format</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.spatialimages.SpatialImage.ImageSlicer">
+<code class="descname">ImageSlicer</code><a class="headerlink" href="#nibabel.spatialimages.SpatialImage.ImageSlicer" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#nibabel.spatialimages.SpatialFirstSlicer" title="nibabel.spatialimages.SpatialFirstSlicer"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpatialFirstSlicer</span></code></a></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.spatialimages.SpatialImage.affine">
+<code class="descname">affine</code><a class="headerlink" href="#nibabel.spatialimages.SpatialImage.affine" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialImage.as_reoriented">
+<code class="descname">as_reoriented</code><span class="sig-paren">(</span><em>ornt</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialImage.as_reoriented" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply an orientation change and return a new image</p>
+<p>If ornt is identity transform, return the original image, unchanged</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>ornt</strong><span class="classifier">(n,2) orientation array</span></dt><dd><p>orientation transform. <code class="docutils literal notranslate"><span class="pre">ornt[N,1]`</span> <span class="pre">is</span> <span class="pre">flip</span> <span class="pre">of</span> <span class="pre">axis</span> <span class="pre">N</span> <span class="pre">of</span> <span class="pre">the</span>
+<span class="pre">array</span> <span class="pre">implied</span> <span class="pre">by</span> <span class="pre">`shape`,</span> <span class="pre">where</span> <span class="pre">1</span> <span class="pre">means</span> <span class="pre">no</span> <span class="pre">flip</span> <span class="pre">and</span> <span class="pre">-1</span> <span class="pre">means</span>
+<span class="pre">flip.</span>&#160; <span class="pre">For</span> <span class="pre">example,</span> <span class="pre">if</span> <span class="pre">``N==0</span></code> and <code class="docutils literal notranslate"><span class="pre">ornt[0,1]</span> <span class="pre">==</span> <span class="pre">-1</span></code>, and
+there’s an array <code class="docutils literal notranslate"><span class="pre">arr</span></code> of shape <cite>shape</cite>, the flip would
+correspond to the effect of <code class="docutils literal notranslate"><span class="pre">np.flipud(arr)</span></code>.  <code class="docutils literal notranslate"><span class="pre">ornt[:,0]</span></code> is
+the transpose that needs to be done to the implied array, as in
+<code class="docutils literal notranslate"><span class="pre">arr.transpose(ornt[:,0])</span></code></p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Subclasses should override this if they have additional requirements
+when re-orienting an image.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="nibabel.spatialimages.SpatialImage.from_image">
+<em class="property">classmethod </em><code class="descname">from_image</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialImage.from_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class method to create new instance of own class from <cite>img</cite></p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>img</strong><span class="classifier"><code class="docutils literal notranslate"><span class="pre">spatialimage</span></code> instance</span></dt><dd><p>In fact, an object with the API of <code class="docutils literal notranslate"><span class="pre">spatialimage</span></code> -
+specifically <code class="docutils literal notranslate"><span class="pre">dataobj</span></code>, <code class="docutils literal notranslate"><span class="pre">affine</span></code>, <code class="docutils literal notranslate"><span class="pre">header</span></code> and <code class="docutils literal notranslate"><span class="pre">extra</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>cimg</strong><span class="classifier"><code class="docutils literal notranslate"><span class="pre">spatialimage</span></code> instance</span></dt><dd><p>Image, of our own class</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialImage.get_affine">
+<code class="descname">get_affine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialImage.get_affine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get affine from image</p>
+<p>get_affine method is deprecated.
+Please use the <code class="docutils literal notranslate"><span class="pre">img.affine</span></code> property instead.</p>
+<ul class="simple">
+<li><p>deprecated from version: 2.1</p></li>
+<li><p>Will raise &lt;class ‘nibabel.deprecator.ExpiredDeprecationError’&gt; as of version: 4.0</p></li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialImage.get_data_dtype">
+<code class="descname">get_data_dtype</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialImage.get_data_dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.spatialimages.SpatialImage.header_class">
+<code class="descname">header_class</code><a class="headerlink" href="#nibabel.spatialimages.SpatialImage.header_class" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#nibabel.spatialimages.SpatialHeader" title="nibabel.spatialimages.SpatialHeader"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpatialHeader</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialImage.orthoview">
+<code class="descname">orthoview</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialImage.orthoview" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the image using OrthoSlicer3D</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>viewer</strong><span class="classifier">instance of OrthoSlicer3D</span></dt><dd><p>The viewer.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This requires matplotlib. If a non-interactive backend is used,
+consider using viewer.show() (equivalently plt.show()) to show
+the figure.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialImage.set_data_dtype">
+<code class="descname">set_data_dtype</code><span class="sig-paren">(</span><em>dtype</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialImage.set_data_dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.spatialimages.SpatialImage.slicer">
+<code class="descname">slicer</code><a class="headerlink" href="#nibabel.spatialimages.SpatialImage.slicer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Slicer object that returns cropped and subsampled images</p>
+<p>The image is resliced in the current orientation; no rotation or
+resampling is performed, and no attempt is made to filter the image
+to avoid <a class="reference external" href="https://en.wikipedia.org/wiki/Aliasing">aliasing</a>.</p>
+<p>The affine matrix is updated with the new intercept (and scales, if
+down-sampling is used), so that all values are found at the same RAS
+locations.</p>
+<p>Slicing may include non-spatial dimensions.
+However, this method does not currently adjust the repetition time in
+the image header.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.spatialimages.SpatialImage.update_header">
+<code class="descname">update_header</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.SpatialImage.update_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Harmonize header with image data and affine</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">affine</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span><span class="mf">2.0</span><span class="p">,</span><span class="mf">3.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span> <span class="o">=</span> <span class="n">SpatialImage</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">affine</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">update_header</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">get_data_shape</span><span class="p">()</span> <span class="o">==</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">img</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">get_zooms</span><span class="p">()</span>
+<span class="go">(1.0, 2.0, 3.0)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="supported-np-types">
+<h2>supported_np_types<a class="headerlink" href="#supported-np-types" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.spatialimages.supported_np_types">
+<code class="descclassname">nibabel.spatialimages.</code><code class="descname">supported_np_types</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.spatialimages.supported_np_types" title="Permalink to this definition">¶</a></dt>
+<dd><p>Numpy data types that instance <cite>obj</cite> supports</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>obj</strong><span class="classifier">object</span></dt><dd><p>Object implementing <cite>get_data_dtype</cite> and <cite>set_data_dtype</cite>.  The object
+should raise <code class="docutils literal notranslate"><span class="pre">HeaderDataError</span></code> for setting unsupported dtypes. The
+object will likely be a header or a <a class="reference internal" href="#nibabel.spatialimages.SpatialImage" title="nibabel.spatialimages.SpatialImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpatialImage</span></code></a></p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>np_types</strong><span class="classifier">set</span></dt><dd><p>set of numpy types that <cite>obj</cite> supports</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

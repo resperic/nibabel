@@ -1,0 +1,215 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Working with nibabel source code" href="../gitwash/index.html" />
+    <link rel="prev" title="Developer documentation page" href="index.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../gitwash/index.html" title="Working with nibabel source code"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Developer documentation page"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Developer documentation page</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">NiBabel Developer Guidelines</a><ul>
+<li><a class="reference internal" href="#nibabel-source-code">NiBabel source code</a></li>
+<li><a class="reference internal" href="#documentation">Documentation</a><ul>
+<li><a class="reference internal" href="#code-documentation">Code Documentation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#git-repository">Git Repository</a><ul>
+<li><a class="reference internal" href="#layout">Layout</a></li>
+<li><a class="reference internal" href="#commits">Commits</a></li>
+<li><a class="reference internal" href="#merges">Merges</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#changelog">Changelog</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Developer documentation page</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../gitwash/index.html"
+                        title="next chapter">Working with <em>nibabel</em> source code</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/devel/devguide.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="nibabel-developer-guidelines">
+<span id="chap-devguide"></span><h1>NiBabel Developer Guidelines<a class="headerlink" href="#nibabel-developer-guidelines" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="nibabel-source-code">
+<h2>NiBabel source code<a class="headerlink" href="#nibabel-source-code" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../gitwash/index.html">Working with <em>nibabel</em> source code</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../gitwash/git_intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gitwash/git_install.html">Install git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gitwash/following_latest.html">Following the latest source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gitwash/patching.html">Making a patch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gitwash/git_development.html">Git for development</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../gitwash/git_resources.html">git resources</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="code-documentation">
+<h3>Code Documentation<a class="headerlink" href="#code-documentation" title="Permalink to this headline">¶</a></h3>
+<p>All documentation should be written using Numpy documentation conventions:</p>
+<blockquote>
+<div><p><a class="reference external" href="https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt#docstring-standard">https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt#docstring-standard</a></p>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="git-repository">
+<h2>Git Repository<a class="headerlink" href="#git-repository" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="layout">
+<h3>Layout<a class="headerlink" href="#layout" title="Permalink to this headline">¶</a></h3>
+<p>The main release branch is called <code class="docutils literal notranslate"><span class="pre">master</span></code>. This is a merge-only branch.
+Features finished or updated by some developer are merged from the
+corresponding branch into <code class="docutils literal notranslate"><span class="pre">master</span></code>. At a certain point the current state of
+<code class="docutils literal notranslate"><span class="pre">master</span></code> is tagged – a release is done.</p>
+<p>Only usable feature should end-up in <code class="docutils literal notranslate"><span class="pre">master</span></code>. Ideally <code class="docutils literal notranslate"><span class="pre">master</span></code> should be
+releasable at all times.</p>
+<p>Additionally, there are distribution branches. They are prefixed <code class="docutils literal notranslate"><span class="pre">dist/</span></code>
+and labeled after the packaging target (e.g. <em>debian</em> for a Debian package).
+If necessary, there can be multiple branches for each distribution target.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">dist/debian/proper</span></code></dt><dd><p>Official Debian packaging</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">dist/debian/dev</span></code></dt><dd><p>Debian packaging of unofficial development snapshots. They do not go into the
+main Debian archive, but might be distributed through other channels (e.g.
+NeuroDebian).</p>
+</dd>
+</dl>
+<p>Releases are merged into the packaging branches, packaging is updated if
+necessary and the branch gets tagged when a package version is released.
+Maintenance (as well as backport) releases or branches off from the respective
+packaging tag.</p>
+<p>There might be additonal branches for each developer, prefixed with intials.
+Alternatively, several GitHub (or elsewhere) clones might be used.</p>
+</div>
+<div class="section" id="commits">
+<h3>Commits<a class="headerlink" href="#commits" title="Permalink to this headline">¶</a></h3>
+<p>Please prefix all commit summaries with one (or more) of the following labels.
+This should help others to easily classify the commits into meaningful
+categories:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>BF</em> : bug fix</p></li>
+<li><p><em>RF</em> : refactoring</p></li>
+<li><p><em>NF</em> : new feature</p></li>
+<li><p><em>BW</em> : addresses backward-compatibility</p></li>
+<li><p><em>OPT</em> : optimization</p></li>
+<li><p><em>BK</em> : breaks something and/or tests fail</p></li>
+<li><p><em>PL</em> : making pylint happier</p></li>
+<li><p><em>DOC</em>: for all kinds of documentation related commits</p></li>
+<li><p><em>TEST</em>: for adding or changing tests</p></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="merges">
+<h3>Merges<a class="headerlink" href="#merges" title="Permalink to this headline">¶</a></h3>
+<p>For easy tracking of what changes were absorbed during merge, we
+advise that you enable merge summaries within git:</p>
+<blockquote>
+<div><p>git-config merge.summary true</p>
+</div></blockquote>
+<p>See <a class="reference internal" href="../gitwash/configure_git.html#configure-git"><span class="std std-ref">Configure git</span></a> for more detail.</p>
+</div>
+</div>
+<div class="section" id="changelog">
+<h2>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h2>
+<p>The changelog is located in the toplevel directory of the source tree in the
+<cite>Changelog</cite> file. The content of this file should be formated as restructured
+text to make it easy to put it into manual appendix and on the website.</p>
+<p>This changelog should neither replicate the VCS commit log nor the
+distribution packaging changelogs (e.g. debian/changelog). It should be
+focused on the user perspective and is intended to list rather macroscopic
+and/or important changes to the module, like feature additions or bugfixes in
+the algorithms with implications to the performance or validity of results.</p>
+<p>It may list references to 3rd party bugtrackers, in case the reported bugs
+match the criteria listed above.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

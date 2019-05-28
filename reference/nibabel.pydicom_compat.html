@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="spaces" href="nibabel.spaces.html" />
+    <link rel="prev" title="py3k" href="nibabel.py3k.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.spaces.html" title="spaces"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.py3k.html" title="py3k"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" >API Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.py3k.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3k</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.spaces.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">spaces</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.pydicom_compat.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.pydicom_compat">
+<span id="pydicom-compat"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydicom_compat</span></code><a class="headerlink" href="#module-nibabel.pydicom_compat" title="Permalink to this headline">¶</a></h1>
+<p>Adapter module for working with pydicom &lt; 1.0 and &gt;= 1.0</p>
+<p>In what follows, “dicom is available” means we can import either a) <code class="docutils literal notranslate"><span class="pre">dicom</span></code>
+(pydicom &lt; 1.0) or or b) <code class="docutils literal notranslate"><span class="pre">pydicom</span></code> (pydicom &gt;= 1.0).</p>
+<p>Regardless of whether dicom is available this module should be importable
+without error, and always defines:</p>
+<ul class="simple">
+<li><p>have_dicom : True if we can import pydicom or dicom;</p></li>
+<li><p>pydicom : pydicom module or dicom module or None of not importable;</p></li>
+<li><p>read_file : <code class="docutils literal notranslate"><span class="pre">read_file</span></code> function if pydicom or dicom module is importable
+else None;</p></li>
+<li><p>tag_for_keyword : <code class="docutils literal notranslate"><span class="pre">tag_for_keyword</span></code> function if pydicom or dicom module
+is importable else None;</p></li>
+<li><p>dicom_test : test decorator that skips test if dicom not available.</p></li>
+</ul>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

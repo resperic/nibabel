@@ -1,0 +1,62 @@
+.. AUTO-GENERATED FILE -- DO NOT EDIT!
+
+:mod:`affines`
+==============
+.. automodule:: nibabel.affines
+
+.. currentmodule:: nibabel.affines
+.. autosummary::
+
+   AffineError
+   append_diag
+   apply_affine
+   dot_reduce
+   from_matvec
+   to_matvec
+   voxel_sizes
+
+
+.. currentmodule:: nibabel.affines
+
+
+:class:`AffineError`
+~~~~~~~~~~~~~~~~~~~~
+
+
+.. autoclass:: AffineError
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+  .. automethod:: __init__
+
+append_diag
+~~~~~~~~~~~
+
+.. autofunction:: append_diag
+
+apply_affine
+~~~~~~~~~~~~
+
+.. autofunction:: apply_affine
+
+dot_reduce
+~~~~~~~~~~
+
+.. autofunction:: dot_reduce
+
+from_matvec
+~~~~~~~~~~~
+
+.. autofunction:: from_matvec
+
+to_matvec
+~~~~~~~~~
+
+.. autofunction:: to_matvec
+
+voxel_sizes
+~~~~~~~~~~~
+
+.. autofunction:: voxel_sizes
+

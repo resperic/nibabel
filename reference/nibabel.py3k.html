@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pydicom_compat" href="nibabel.pydicom_compat.html" />
+    <link rel="prev" title="processing" href="nibabel.processing.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.pydicom_compat.html" title="pydicom_compat"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.processing.html" title="processing"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" >API Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3k</span></code></a><ul>
+<li><a class="reference internal" href="#asbytes">asbytes</a></li>
+<li><a class="reference internal" href="#asbytes-nested">asbytes_nested</a></li>
+<li><a class="reference internal" href="#asstr">asstr</a></li>
+<li><a class="reference internal" href="#asunicode-nested">asunicode_nested</a></li>
+<li><a class="reference internal" href="#getexception">getexception</a></li>
+<li><a class="reference internal" href="#ints2bytes">ints2bytes</a></li>
+<li><a class="reference internal" href="#isfileobj">isfileobj</a></li>
+<li><a class="reference internal" href="#open-latin1">open_latin1</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.processing.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">processing</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.pydicom_compat.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydicom_compat</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.py3k.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.py3k">
+<span id="py3k"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">py3k</span></code><a class="headerlink" href="#module-nibabel.py3k" title="Permalink to this headline">¶</a></h1>
+<p>Python 3 compatibility tools.</p>
+<p>Copied from numpy/compat/py3k.</p>
+<p>Please prefer the routines in the six module when possible.</p>
+<p>BSD license</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.py3k.asbytes" title="nibabel.py3k.asbytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asbytes</span></code></a>(s)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.py3k.asbytes_nested" title="nibabel.py3k.asbytes_nested"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asbytes_nested</span></code></a>(x)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.py3k.asstr" title="nibabel.py3k.asstr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asstr</span></code></a>(s)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.py3k.asunicode_nested" title="nibabel.py3k.asunicode_nested"><code class="xref py py-obj docutils literal notranslate"><span class="pre">asunicode_nested</span></code></a>(x)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.py3k.getexception" title="nibabel.py3k.getexception"><code class="xref py py-obj docutils literal notranslate"><span class="pre">getexception</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.py3k.ints2bytes" title="nibabel.py3k.ints2bytes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ints2bytes</span></code></a>(seq)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.py3k.isfileobj" title="nibabel.py3k.isfileobj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isfileobj</span></code></a>(f)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.py3k.open_latin1" title="nibabel.py3k.open_latin1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">open_latin1</span></code></a>(filename[, mode])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="asbytes">
+<h2>asbytes<a class="headerlink" href="#asbytes" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.py3k.asbytes">
+<code class="descclassname">nibabel.py3k.</code><code class="descname">asbytes</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.py3k.asbytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="asbytes-nested">
+<h2>asbytes_nested<a class="headerlink" href="#asbytes-nested" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.py3k.asbytes_nested">
+<code class="descclassname">nibabel.py3k.</code><code class="descname">asbytes_nested</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.py3k.asbytes_nested" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="asstr">
+<h2>asstr<a class="headerlink" href="#asstr" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.py3k.asstr">
+<code class="descclassname">nibabel.py3k.</code><code class="descname">asstr</code><span class="sig-paren">(</span><em>s</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.py3k.asstr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="asunicode-nested">
+<h2>asunicode_nested<a class="headerlink" href="#asunicode-nested" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.py3k.asunicode_nested">
+<code class="descclassname">nibabel.py3k.</code><code class="descname">asunicode_nested</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.py3k.asunicode_nested" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="getexception">
+<h2>getexception<a class="headerlink" href="#getexception" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.py3k.getexception">
+<code class="descclassname">nibabel.py3k.</code><code class="descname">getexception</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.py3k.getexception" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="ints2bytes">
+<h2>ints2bytes<a class="headerlink" href="#ints2bytes" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.py3k.ints2bytes">
+<code class="descclassname">nibabel.py3k.</code><code class="descname">ints2bytes</code><span class="sig-paren">(</span><em>seq</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.py3k.ints2bytes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="isfileobj">
+<h2>isfileobj<a class="headerlink" href="#isfileobj" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.py3k.isfileobj">
+<code class="descclassname">nibabel.py3k.</code><code class="descname">isfileobj</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.py3k.isfileobj" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="open-latin1">
+<h2>open_latin1<a class="headerlink" href="#open-latin1" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.py3k.open_latin1">
+<code class="descclassname">nibabel.py3k.</code><code class="descname">open_latin1</code><span class="sig-paren">(</span><em>filename</em>, <em>mode='r'</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.py3k.open_latin1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

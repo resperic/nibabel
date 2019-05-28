@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="DICOM information" href="dicom_info.html" />
+    <link rel="prev" title="Advanced Testing" href="../devel/advanced_testing.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dicom_info.html" title="DICOM information"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../devel/advanced_testing.html" title="Advanced Testing"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+ 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../devel/advanced_testing.html"
+                        title="previous chapter">Advanced Testing</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="dicom_info.html"
+                        title="next chapter">DICOM information</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/dicom/dicom.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="dicom-concepts-and-implementations">
+<span id="dicom"></span><h1>DICOM concepts and implementations<a class="headerlink" href="#dicom-concepts-and-implementations" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dicom_info.html">DICOM information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dicom_info.html#sample-images">Sample images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dicom_intro.html">Introduction to DICOM</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dicom_intro.html#dicom-is-messages">DICOM is messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicom_intro.html#the-dicom-standard">The DICOM standard</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicom_intro.html#dicom-data-format">DICOM data format</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dicom_orientation.html">Defining the DICOM orientation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dicom_orientation.html#dicom-patient-coordinate-system">DICOM patient coordinate system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicom_orientation.html#dicom-pixel-data">DICOM pixel data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicom_orientation.html#pixel-spacing">Pixel spacing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicom_orientation.html#dicom-voxel-to-patient-coordinate-system-mapping">DICOM voxel to patient coordinate system mapping</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicom_orientation.html#i-j-columns-rows-in-dicom">(i, j), columns, rows in DICOM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicom_orientation.html#dicom-affines-again">DICOM affines again</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicom_orientation.html#dicom-affine-formula">DICOM affine formula</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicom_orientation.html#getting-a-3d-affine-from-a-dicom-slice-or-list-of-slices">Getting a 3D affine from a DICOM slice or list of slices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicom_orientation.html#working-out-the-z-coordinates-for-a-set-of-slices">Working out the Z coordinates for a set of slices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dicom_fields.html">DICOM fields</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dicom_fields.html#fields-for-ordering-dicom-files-into-images">Fields for ordering DICOM files into images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicom_fields.html#multi-frame-images">Multi-frame images</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dicom_mosaic.html">Siemens mosaic format</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dicom_mosaic.html#getting-the-slices-from-the-mosaic">Getting the slices from the mosaic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicom_mosaic.html#dicom-orientation-for-mosaic">DICOM orientation for mosaic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dicom_mosaic.html#data-scaling">Data scaling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="siemens_csa.html">Siemens format DICOM with CSA header</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="siemens_csa.html#csa-header">CSA header</a></li>
+<li class="toctree-l2"><a class="reference internal" href="siemens_csa.html#csa1">CSA1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="siemens_csa.html#csa2">CSA2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="spm_dicom.html">SPM DICOM conversion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spm_dicom.html#spm-dicom-dict-mat"><code class="docutils literal notranslate"><span class="pre">spm_dicom_dict.mat</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="spm_dicom.html#spm-dicom-headers-m"><code class="docutils literal notranslate"><span class="pre">spm_dicom_headers.m</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="spm_dicom.html#spm-dicom-convert-m"><code class="docutils literal notranslate"><span class="pre">spm_dicom_convert.m</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dicom_niftiheader.html">DICOM Tags in the NIfTI Header</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

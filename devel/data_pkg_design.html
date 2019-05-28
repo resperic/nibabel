@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="A guide to making a nibabel release" href="make_release.html" />
+    <link rel="prev" title="Keeping track of whether images have been modified since load" href="modified_images.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="make_release.html" title="A guide to making a nibabel release"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="modified_images.html" title="Keeping track of whether images have been modified since load"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="index.html" >Developer documentation page</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="devdiscuss.html" accesskey="U">Developer discussions</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Design of data packages for the nibabel and the nipy suite</a><ul>
+<li><a class="reference internal" href="#use-cases-for-data-packages">Use cases for data packages</a><ul>
+<li><a class="reference internal" href="#using-the-data-package">Using the data package</a></li>
+<li><a class="reference internal" href="#warnings-during-installation">Warnings during installation</a></li>
+<li><a class="reference internal" href="#finding-the-data">Finding the data</a></li>
+<li><a class="reference internal" href="#requirements-for-a-data-package">Requirements for a data package</a></li>
+<li><a class="reference internal" href="#data-package-format">Data package format</a></li>
+<li><a class="reference internal" href="#installing-the-data">Installing the data</a></li>
+<li><a class="reference internal" href="#packaging-for-distributions">Packaging for distributions</a></li>
+<li><a class="reference internal" href="#current-implementation">Current implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="modified_images.html"
+                        title="previous chapter">Keeping track of whether images have been modified since load</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="make_release.html"
+                        title="next chapter">A guide to making a nibabel release</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/devel/data_pkg_design.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="design-of-data-packages-for-the-nibabel-and-the-nipy-suite">
+<span id="data-package-design"></span><h1>Design of data packages for the nibabel and the nipy suite<a class="headerlink" href="#design-of-data-packages-for-the-nibabel-and-the-nipy-suite" title="Permalink to this headline">¶</a></h1>
+<p>See <a class="reference internal" href="data_pkg_discuss.html#data-package-discuss"><span class="std std-ref">Principles of data package</span></a> for a more general discussion of design
+issues.</p>
+<p>When developing or using nipy, many data files can be useful. We divide the
+data files nipy uses into at least 3 categories</p>
+<ol class="arabic simple">
+<li><p><em>test data</em> - data files required for routine code testing</p></li>
+<li><p><em>template data</em> - data files required for algorithms to function,
+such as templates or atlases</p></li>
+<li><p><em>example data</em> - data files for running examples, or optional tests</p></li>
+</ol>
+<p>Files used for routine testing are typically very small data files. They are
+shipped with the software, and live in the code repository. For example, in
+the case of <code class="docutils literal notranslate"><span class="pre">nipy</span></code> itself, there are some test files that live in the module
+path <code class="docutils literal notranslate"><span class="pre">nipy.testing.data</span></code>.  Nibabel ships data files in
+<code class="docutils literal notranslate"><span class="pre">nibabel.tests.data</span></code>.  See <a class="reference internal" href="add_test_data.html"><span class="doc">Adding test data</span></a> for discussion.</p>
+<p><em>template data</em> and <em>example data</em> are example of <em>data packages</em>.  What
+follows is a discussion of the design and use of data packages.</p>
+<div class="section" id="use-cases-for-data-packages">
+<h2>Use cases for data packages<a class="headerlink" href="#use-cases-for-data-packages" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="using-the-data-package">
+<h3>Using the data package<a class="headerlink" href="#using-the-data-package" title="Permalink to this headline">¶</a></h3>
+<p>The programmer can use the data like this:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">nibabel.data</span> <span class="k">import</span> <span class="n">make_datasource</span>
+
+<span class="n">templates</span> <span class="o">=</span> <span class="n">make_datasource</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">relpath</span><span class="o">=</span><span class="s1">&#39;nipy/templates&#39;</span><span class="p">))</span>
+<span class="n">fname</span> <span class="o">=</span> <span class="n">templates</span><span class="o">.</span><span class="n">get_filename</span><span class="p">(</span><span class="s1">&#39;ICBM152&#39;</span><span class="p">,</span> <span class="s1">&#39;2mm&#39;</span><span class="p">,</span> <span class="s1">&#39;T1.nii.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">fname</span></code> will be the absolute path to the template image
+<code class="docutils literal notranslate"><span class="pre">ICBM152/2mm/T1.nii.gz</span></code>.</p>
+<p>The programmer can insist on a particular version of a <code class="docutils literal notranslate"><span class="pre">datasource</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">templates</span><span class="o">.</span><span class="n">version</span> <span class="o">&lt;</span> <span class="s1">&#39;0.4&#39;</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Need datasource version at least 0.4&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">Need datasource version at least 0.4</span>
+</pre></div>
+</div>
+<p>If the repository cannot find the data, then:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">make_datasource</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">relpath</span><span class="o">=</span><span class="s1">&#39;nipy/implausible&#39;</span><span class="p">))</span>
+<span class="gt">Traceback (most recent call last):</span>
+ <span class="c">...</span>
+<span class="gr">nibabel.data.DataError</span>: <span class="n">...</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">DataError</span></code> gives a helpful warning about why the data was not
+found, and how it should be installed.</p>
+</div>
+<div class="section" id="warnings-during-installation">
+<h3>Warnings during installation<a class="headerlink" href="#warnings-during-installation" title="Permalink to this headline">¶</a></h3>
+<p>The example data and template data may be important, and so we want to warn
+the user if NIPY cannot find either of the two sets of data when installing
+the package.  Thus:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>will import nipy after installation to check whether these raise an error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">nibabel.data</span> <span class="k">import</span> <span class="n">make_datasource</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">templates</span> <span class="o">=</span> <span class="n">make_datasource</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">relpath</span><span class="o">=</span><span class="s1">&#39;nipy/templates&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">example_data</span> <span class="o">=</span> <span class="n">make_datasource</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">relpath</span><span class="o">=</span><span class="s1">&#39;nipy/data&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>and warn the user accordingly, with some basic instructions for how to
+install the data.</p>
+</div>
+<div class="section" id="finding-the-data">
+<span id="find-data"></span><h3>Finding the data<a class="headerlink" href="#finding-the-data" title="Permalink to this headline">¶</a></h3>
+<p>The routine <code class="docutils literal notranslate"><span class="pre">make_datasource</span></code> will look for data packages that have been
+installed.  For the following call:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">templates</span> <span class="o">=</span> <span class="n">make_datasource</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">relpath</span><span class="o">=</span><span class="s1">&#39;nipy/templates&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>the code will:</p>
+<ol class="arabic simple">
+<li><p>Get a list of paths where data is known to be stored with
+<code class="docutils literal notranslate"><span class="pre">nibabel.data.get_data_path()</span></code></p></li>
+<li><p>For each of these paths, search for directory <code class="docutils literal notranslate"><span class="pre">nipy/templates</span></code>.  If
+found, and of the correct format (see below), return a datasource,
+otherwise raise an Exception</p></li>
+</ol>
+<p>The paths collected by <code class="docutils literal notranslate"><span class="pre">nibabel.data.get_data_paths()</span></code> are constructed from
+‘:’ (Unix) or ‘;’ separated strings.  The source of the strings (in the order
+in which they will be used in the search above) are:</p>
+<ol class="arabic simple">
+<li><p>The value of the <code class="docutils literal notranslate"><span class="pre">NIPY_DATA_PATH</span></code> environment variable, if set</p></li>
+<li><p>A section = <code class="docutils literal notranslate"><span class="pre">DATA</span></code>, parameter = <code class="docutils literal notranslate"><span class="pre">path</span></code> entry in a
+<code class="docutils literal notranslate"><span class="pre">config.ini</span></code> file in <code class="docutils literal notranslate"><span class="pre">nipy_dir</span></code> where <code class="docutils literal notranslate"><span class="pre">nipy_dir</span></code> is
+<code class="docutils literal notranslate"><span class="pre">$HOME/.nipy</span></code> or equivalent.</p></li>
+<li><p>Section = <code class="docutils literal notranslate"><span class="pre">DATA</span></code>, parameter = <code class="docutils literal notranslate"><span class="pre">path</span></code> entries in configuration
+<code class="docutils literal notranslate"><span class="pre">.ini</span></code> files, where the <code class="docutils literal notranslate"><span class="pre">.ini</span></code> files are found by
+<code class="docutils literal notranslate"><span class="pre">glob.glob(os.path.join(etc_dir,</span> <span class="pre">'*.ini')</span></code> and <code class="docutils literal notranslate"><span class="pre">etc_dir</span></code> is
+<code class="docutils literal notranslate"><span class="pre">/etc/nipy</span></code> on Unix, and some suitable equivalent on Windows.</p></li>
+<li><p>The result of <code class="docutils literal notranslate"><span class="pre">os.path.join(sys.prefix,</span> <span class="pre">'share',</span> <span class="pre">'nipy')</span></code></p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">sys.prefix</span></code> is <code class="docutils literal notranslate"><span class="pre">/usr</span></code>, we add <code class="docutils literal notranslate"><span class="pre">/usr/local/share/nipy</span></code>. We
+need this because Python &gt;= 2.6 in Debian / Ubuntu does default installs to
+<code class="docutils literal notranslate"><span class="pre">/usr/local</span></code>.</p></li>
+<li><p>The result of <code class="docutils literal notranslate"><span class="pre">get_nipy_user_dir()</span></code></p></li>
+</ol>
+</div>
+<div class="section" id="requirements-for-a-data-package">
+<h3>Requirements for a data package<a class="headerlink" href="#requirements-for-a-data-package" title="Permalink to this headline">¶</a></h3>
+<p>To be a valid NIPY project data package, you need to satisfy:</p>
+<ol class="arabic simple">
+<li><p>The installer installs the data in some place that can be found using
+the method defined in <a class="reference internal" href="#find-data"><span class="std std-ref">Finding the data</span></a>.</p></li>
+</ol>
+<p>We recommend that:</p>
+<ol class="arabic simple">
+<li><p>By default, you install data in a standard location such as
+<code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;/share/nipy</span></code> where <code class="docutils literal notranslate"><span class="pre">&lt;prefix&gt;</span></code> is the standard Python
+prefix obtained by <code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;</span> <span class="pre">import</span> <span class="pre">sys;</span> <span class="pre">print</span> <span class="pre">sys.prefix</span></code></p></li>
+</ol>
+<p>Remember that there is a distinction between the NIPY project - the
+umbrella of neuroimaging in python - and the NIPY package - the main
+code package in the NIPY project.  Thus, if you want to install data
+under the NIPY <em>package</em> umbrella, your data might go to
+<code class="docutils literal notranslate"><span class="pre">/usr/share/nipy/nipy/packagename</span></code> (on Unix).  Note <code class="docutils literal notranslate"><span class="pre">nipy</span></code> twice -
+once for the project, once for the package.  If you want to install data
+under - say - the <code class="docutils literal notranslate"><span class="pre">pbrain</span></code> package umbrella, that would go in
+<code class="docutils literal notranslate"><span class="pre">/usr/share/nipy/pbrain/packagename</span></code>.</p>
+</div>
+<div class="section" id="data-package-format">
+<h3>Data package format<a class="headerlink" href="#data-package-format" title="Permalink to this headline">¶</a></h3>
+<p>The following tree is an example of the kind of pattern we would expect
+in a data directory, where the <code class="docutils literal notranslate"><span class="pre">nipy-data</span></code> and <code class="docutils literal notranslate"><span class="pre">nipy-templates</span></code>
+packages have been installed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;ROOT&gt;
+`-- nipy
+    |-- data
+    |   |-- config.ini
+    |   `-- placeholder.txt
+    `-- templates
+        |-- ICBM152
+        |   `-- 2mm
+        |       `-- T1.nii.gz
+        |-- colin27
+        |   `-- 2mm
+        |       `-- T1.nii.gz
+        `-- config.ini
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">&lt;ROOT&gt;</span></code> directory is the directory that will appear somewhere in
+the list from <code class="docutils literal notranslate"><span class="pre">nibabel.data.get_data_path()</span></code>.  The <code class="docutils literal notranslate"><span class="pre">nipy</span></code> subdirectory
+signifies data for the <code class="docutils literal notranslate"><span class="pre">nipy</span></code> package (as opposed to other
+NIPY-related packages such as <code class="docutils literal notranslate"><span class="pre">pbrain</span></code>).  The <code class="docutils literal notranslate"><span class="pre">data</span></code> subdirectory of
+<code class="docutils literal notranslate"><span class="pre">nipy</span></code> contains files from the <code class="docutils literal notranslate"><span class="pre">nipy-data</span></code> package.  In the
+<code class="docutils literal notranslate"><span class="pre">nipy/data</span></code> or <code class="docutils literal notranslate"><span class="pre">nipy/templates</span></code> directories, there is a
+<code class="docutils literal notranslate"><span class="pre">config.ini</span></code> file, that has at least an entry like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span>
+<span class="n">version</span> <span class="o">=</span> <span class="mf">0.2</span>
+</pre></div>
+</div>
+<p>giving the version of the data package.</p>
+</div>
+<div class="section" id="installing-the-data">
+<span id="data-package-design-install"></span><h3>Installing the data<a class="headerlink" href="#installing-the-data" title="Permalink to this headline">¶</a></h3>
+<p>We use python distutils to install data packages, and the <code class="docutils literal notranslate"><span class="pre">data_files</span></code>
+mechanism to install the data.  On Unix, with the following command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">my</span><span class="o">/</span><span class="n">prefix</span>
+</pre></div>
+</div>
+<p>data will go to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">prefix</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">nipy</span>
+</pre></div>
+</div>
+<p>For the example above this will result in these subdirectories:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">prefix</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">nipy</span><span class="o">/</span><span class="n">nipy</span><span class="o">/</span><span class="n">data</span>
+<span class="o">/</span><span class="n">my</span><span class="o">/</span><span class="n">prefix</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">nipy</span><span class="o">/</span><span class="n">nipy</span><span class="o">/</span><span class="n">templates</span>
+</pre></div>
+</div>
+<p>because <code class="docutils literal notranslate"><span class="pre">nipy</span></code> is both the project, and the package to which the data
+relates.</p>
+<p>If you install to a particular location, you will need to add that location to
+the output of <code class="docutils literal notranslate"><span class="pre">nibabel.data.get_data_path()</span></code> using one of the mechanisms
+above, for example, in your system configuration:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">NIPY_DATA_PATH</span><span class="o">=/</span><span class="n">my</span><span class="o">/</span><span class="n">prefix</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">nipy</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="packaging-for-distributions">
+<h3>Packaging for distributions<a class="headerlink" href="#packaging-for-distributions" title="Permalink to this headline">¶</a></h3>
+<p>For a particular data package - say <code class="docutils literal notranslate"><span class="pre">nipy-templates</span></code> - distributions
+will want to:</p>
+<ol class="arabic simple">
+<li><p>Install the data in set location.  The default from <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">setup.py</span>
+<span class="pre">install</span></code> for the data packages will be <code class="docutils literal notranslate"><span class="pre">/usr/share/nipy</span></code> on Unix.</p></li>
+<li><p>Point a system installation of NIPY to these data.</p></li>
+</ol>
+<p>For the latter, the most obvious route is to copy an <code class="docutils literal notranslate"><span class="pre">.ini</span></code> file named for
+the data package into the NIPY <code class="docutils literal notranslate"><span class="pre">etc_dir</span></code>.  In this case, on Unix, we will
+want a file called <code class="docutils literal notranslate"><span class="pre">/etc/nipy/nipy_templates.ini</span></code> with contents:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">DATA</span><span class="p">]</span>
+<span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">nipy</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="current-implementation">
+<h3>Current implementation<a class="headerlink" href="#current-implementation" title="Permalink to this headline">¶</a></h3>
+<p>This section describes how we (the nipy community) implement data packages at
+the moment.</p>
+<p>The data in the data packages will not usually be under source control.  This
+is because images don’t compress very well, and any change in the data will
+result in a large extra storage cost in the repository.  If you’re pretty
+clear that the data files aren’t going to change, then a repository could work
+OK.</p>
+<p>The data packages will be available at a central release location.  For now
+this will be: <a class="reference external" href="http://nipy.org/data-packages/">http://nipy.org/data-packages/</a> .</p>
+<p>A package, such as <code class="docutils literal notranslate"><span class="pre">nipy-templates-0.2.tar.gz</span></code> will have the following sort
+of structure:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;ROOT&gt;
+  |-- setup.py
+  |-- README.txt
+  |-- MANIFEST.in
+  `-- templates
+      |-- ICBM152
+      |   |-- 1mm
+      |   |   `-- T1_brain.nii.gz
+      |   `-- 2mm
+      |       `-- T1.nii.gz
+      |-- colin27
+      |   `-- 2mm
+      |       `-- T1.nii.gz
+      `-- config.ini
+</pre></div>
+</div>
+<p>There should be only one <code class="docutils literal notranslate"><span class="pre">nipy/packagename</span></code> directory delivered by a
+particular package.  For example, this package installs <code class="docutils literal notranslate"><span class="pre">nipy/templates</span></code>,
+but does not contain <code class="docutils literal notranslate"><span class="pre">nipy/data</span></code>.</p>
+<p>Making a new package tarball is simply:</p>
+<ol class="arabic simple">
+<li><p>Downloading and unpacking e.g. <code class="docutils literal notranslate"><span class="pre">nipy-templates-0.1.tar.gz</span></code> to form the
+directory structure above;</p></li>
+<li><p>Making any changes to the directory;</p></li>
+<li><p>Running <code class="docutils literal notranslate"><span class="pre">setup.py</span> <span class="pre">sdist</span></code> to recreate the package.</p></li>
+</ol>
+<p>The process of making a release should be:</p>
+<ol class="arabic simple">
+<li><p>Increment the major or minor version number in the <code class="docutils literal notranslate"><span class="pre">config.ini</span></code> file;</p></li>
+<li><p>Make a package tarball as above;</p></li>
+<li><p>Upload to distribution site.</p></li>
+</ol>
+<p>There is an example nipy data package <code class="docutils literal notranslate"><span class="pre">nipy-examplepkg</span></code> in the
+<code class="docutils literal notranslate"><span class="pre">examples</span></code> directory of the NIPY repository.</p>
+<p>The machinery for creating and maintaining data packages is available at
+<a class="reference external" href="https://github.com/nipy/data-packaging">https://github.com/nipy/data-packaging</a>.</p>
+<p>See the <code class="docutils literal notranslate"><span class="pre">README.txt</span></code> file there for more information.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

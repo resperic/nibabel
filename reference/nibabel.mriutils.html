@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="processing" href="nibabel.processing.html" />
+    <link rel="prev" title="minc" href="nibabel.minc.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.processing.html" title="processing"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.minc.html" title="minc"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" >API Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mriutils</span></code></a><ul>
+<li><a class="reference internal" href="#mrierror"><code class="xref py py-class docutils literal notranslate"><span class="pre">MRIError</span></code></a></li>
+<li><a class="reference internal" href="#calculate-dwell-time">calculate_dwell_time</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.minc.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">minc</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.processing.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">processing</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.mriutils.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.mriutils">
+<span id="mriutils"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">mriutils</span></code><a class="headerlink" href="#module-nibabel.mriutils" title="Permalink to this headline">¶</a></h1>
+<p>Utilities for calculations related to MRI</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.mriutils.MRIError" title="nibabel.mriutils.MRIError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MRIError</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.mriutils.calculate_dwell_time" title="nibabel.mriutils.calculate_dwell_time"><code class="xref py py-obj docutils literal notranslate"><span class="pre">calculate_dwell_time</span></code></a>(water_fat_shift, …)</p></td>
+<td><p>Calculate the dwell time</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="mrierror">
+<h2><a class="reference internal" href="#nibabel.mriutils.MRIError" title="nibabel.mriutils.MRIError"><code class="xref py py-class docutils literal notranslate"><span class="pre">MRIError</span></code></a><a class="headerlink" href="#mrierror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.mriutils.MRIError">
+<em class="property">class </em><code class="descclassname">nibabel.mriutils.</code><code class="descname">MRIError</code><a class="headerlink" href="#nibabel.mriutils.MRIError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<dl class="method">
+<dt id="nibabel.mriutils.MRIError.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.mriutils.MRIError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="calculate-dwell-time">
+<h2>calculate_dwell_time<a class="headerlink" href="#calculate-dwell-time" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.mriutils.calculate_dwell_time">
+<code class="descclassname">nibabel.mriutils.</code><code class="descname">calculate_dwell_time</code><span class="sig-paren">(</span><em>water_fat_shift</em>, <em>echo_train_length</em>, <em>field_strength</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.mriutils.calculate_dwell_time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the dwell time</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>water_fat_shift</strong><span class="classifier">float</span></dt><dd><p>The water fat shift of the recording, in pixels.</p>
+</dd>
+<dt><strong>echo_train_length</strong><span class="classifier">int</span></dt><dd><p>The echo train length of the imaging sequence.</p>
+</dd>
+<dt><strong>field_strength</strong><span class="classifier">float</span></dt><dd><p>Strength of the magnet in Tesla, e.g. 3.0 for a 3T magnet recording.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>dwell_time</strong><span class="classifier">float</span></dt><dd><p>The dwell time in seconds.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>MRIError</strong></dt><dd><p>if values are out of range</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

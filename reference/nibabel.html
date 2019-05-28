@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="analyze" href="nibabel.analyze.html" />
+    <link rel="prev" title="API Documentation" href="../api.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.analyze.html" title="analyze"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../api.html" title="API Documentation"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" accesskey="U">API Documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nibabel</span></code></a><ul>
+<li><a class="reference internal" href="#website">Website</a></li>
+<li><a class="reference internal" href="#mailing-lists">Mailing Lists</a></li>
+<li><a class="reference internal" href="#code">Code</a></li>
+<li><a class="reference internal" href="#license">License</a></li>
+<li><a class="reference internal" href="#citing-nibabel">Citing nibabel</a></li>
+<li><a class="reference internal" href="#quickstart">Quickstart</a></li>
+<li><a class="reference internal" href="#get-info">get_info</a></li>
+<li><a class="reference internal" href="#setup-test">setup_test</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../api.html"
+                        title="previous chapter">API Documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.analyze.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">analyze</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel">
+<span id="nibabel"></span><h1><a class="reference internal" href="#module-nibabel" title="nibabel"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nibabel</span></code></a><a class="headerlink" href="#module-nibabel" title="Permalink to this headline">¶</a></h1>
+<p>Read / write access to some common neuroimaging file formats</p>
+<p>This package provides read +/- write access to some common medical and
+neuroimaging file formats, including: <a class="reference external" href="http://www.grahamwideman.com/gw/brain/analyze/formatdoc.htm">ANALYZE</a> (plain, SPM99, SPM2 and later),
+<a class="reference external" href="https://www.nitrc.org/projects/gifti">GIFTI</a>, <a class="reference external" href="http://nifti.nimh.nih.gov/nifti-1/">NIfTI1</a>, <a class="reference external" href="http://nifti.nimh.nih.gov/nifti-2/">NIfTI2</a>, <a class="reference external" href="https://www.nitrc.org/projects/cifti/">CIFTI-2</a>, <a class="reference external" href="https://en.wikibooks.org/wiki/MINC/Reference/MINC1_File_Format_Reference">MINC1</a>, <a class="reference external" href="https://en.wikibooks.org/wiki/MINC/Reference/MINC2.0_File_Format_Reference">MINC2</a>, <a class="reference external" href="https://afni.nimh.nih.gov/pub/dist/src/README.attributes">AFNI BRIK/HEAD</a>, <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu/fswiki/FsTutorial/MghFormat">MGH</a> and
+<a class="reference external" href="http://xmedcon.sourceforge.net/Docs/Ecat">ECAT</a> as well as Philips PAR/REC.  We can read and write <a class="reference external" href="https://surfer.nmr.mgh.harvard.edu">FreeSurfer</a> geometry,
+annotation and morphometry files.  There is some very limited support for
+<a class="reference external" href="http://medical.nema.org/">DICOM</a>.  NiBabel is the successor of <a class="reference external" href="http://niftilib.sourceforge.net/pynifti/">PyNIfTI</a>.</p>
+<p>The various image format classes give full or selective access to header
+(meta) information and access to the image data is made available via NumPy
+arrays.</p>
+<div class="section" id="website">
+<h2>Website<a class="headerlink" href="#website" title="Permalink to this headline">¶</a></h2>
+<p>Current documentation on nibabel can always be found at the <a class="reference external" href="http://nipy.org/nibabel">NIPY nibabel
+website</a>.</p>
+</div>
+<div class="section" id="mailing-lists">
+<h2>Mailing Lists<a class="headerlink" href="#mailing-lists" title="Permalink to this headline">¶</a></h2>
+<p>Please send any questions or suggestions to the <a class="reference external" href="https://mail.python.org/mailman/listinfo/neuroimaging">neuroimaging mailing list</a>.</p>
+</div>
+<div class="section" id="code">
+<h2>Code<a class="headerlink" href="#code" title="Permalink to this headline">¶</a></h2>
+<p>Install nibabel with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">nibabel</span>
+</pre></div>
+</div>
+<p>You may also be interested in:</p>
+<ul class="simple">
+<li><p>the <a class="reference external" href="https://github.com/nipy/nibabel">nibabel code repository</a> on Github;</p></li>
+<li><p><a class="reference external" href="http://nipy.org/nibabel">documentation</a> for all releases and current development tree;</p></li>
+<li><p>download the <a class="reference external" href="https://pypi.python.org/pypi/nibabel">current release</a> from pypi;</p></li>
+<li><p>download <a class="reference external" href="https://github.com/nipy/nibabel/archive/master.zip">current development version</a> as a zip file;</p></li>
+<li><p>downloads of all <a class="reference external" href="https://github.com/nipy/nibabel/releases">available releases</a>.</p></li>
+</ul>
+</div>
+<div class="section" id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this headline">¶</a></h2>
+<p>Nibabel is licensed under the terms of the MIT license. Some code included
+with nibabel is licensed under the BSD license.  Please see the COPYING file
+in the nibabel distribution.</p>
+</div>
+<div class="section" id="citing-nibabel">
+<h2>Citing nibabel<a class="headerlink" href="#citing-nibabel" title="Permalink to this headline">¶</a></h2>
+<p>Please see the <a class="reference external" href="https://github.com/nipy/nibabel/releases">available releases</a> for the release of nibabel that you are
+using.  Recent releases have a <a class="reference external" href="https://zenodo.org">Zenodo</a> <a class="reference external" href="https://en.wikipedia.org/wiki/Digital_object_identifier">Digital Object Identifier</a> badge at
+the top of the release notes.  Click on the badge for more information.</p>
+</div>
+<div class="section" id="quickstart">
+<h2>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">nibabel</span> <span class="k">as</span> <span class="nn">nib</span>
+
+<span class="n">img1</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;my_file.nii&#39;</span><span class="p">)</span>
+<span class="n">img2</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;other_file.nii.gz&#39;</span><span class="p">)</span>
+<span class="n">img3</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;spm_file.img&#39;</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">img1</span><span class="o">.</span><span class="n">get_data</span><span class="p">()</span>
+<span class="n">affine</span> <span class="o">=</span> <span class="n">img1</span><span class="o">.</span><span class="n">affine</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">img1</span><span class="p">)</span>
+
+<span class="n">nib</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">img1</span><span class="p">,</span> <span class="s1">&#39;my_file_copy.nii.gz&#39;</span><span class="p">)</span>
+
+<span class="n">new_image</span> <span class="o">=</span> <span class="n">nib</span><span class="o">.</span><span class="n">Nifti1Image</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">affine</span><span class="p">)</span>
+<span class="n">nib</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">new_image</span><span class="p">,</span> <span class="s1">&#39;new_image.nii.gz&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For more detailed information see the <a class="reference internal" href="../manual.html#manual"><span class="std std-ref">NiBabel Manual</span></a>.</p>
+</div>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.get_info" title="nibabel.get_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_info</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.setup_test" title="nibabel.setup_test"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_test</span></code></a>()</p></td>
+<td><p>Set numpy print options to “legacy” for new versions of numpy</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="get-info">
+<h2>get_info<a class="headerlink" href="#get-info" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.get_info">
+<code class="descclassname">nibabel.</code><code class="descname">get_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.get_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="setup-test">
+<h2>setup_test<a class="headerlink" href="#setup-test" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.setup_test">
+<code class="descclassname">nibabel.</code><code class="descname">setup_test</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.setup_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set numpy print options to “legacy” for new versions of numpy</p>
+<p>If imported into a file, nosetest will run this before any doctests.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

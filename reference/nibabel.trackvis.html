@@ -1,0 +1,608 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="eulerangles" href="nibabel.eulerangles.html" />
+    <link rel="prev" title="streamlines" href="nibabel.streamlines.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.eulerangles.html" title="eulerangles"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.streamlines.html" title="streamlines"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" accesskey="U">API Documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trackvis</span></code></a><ul>
+<li><a class="reference internal" href="#dataerror"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataError</span></code></a></li>
+<li><a class="reference internal" href="#headererror"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderError</span></code></a></li>
+<li><a class="reference internal" href="#trackvisfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackvisFile</span></code></a></li>
+<li><a class="reference internal" href="#trackvisfileerror"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackvisFileError</span></code></a></li>
+<li><a class="reference internal" href="#aff-from-hdr">aff_from_hdr</a></li>
+<li><a class="reference internal" href="#aff-to-hdr">aff_to_hdr</a></li>
+<li><a class="reference internal" href="#empty-header">empty_header</a></li>
+<li><a class="reference internal" href="#read">read</a></li>
+<li><a class="reference internal" href="#write">write</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.streamlines.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">streamlines</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.eulerangles.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">eulerangles</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.trackvis.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.trackvis">
+<span id="trackvis"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">trackvis</span></code><a class="headerlink" href="#module-nibabel.trackvis" title="Permalink to this headline">¶</a></h1>
+<p>Read and write trackvis files (old interface)</p>
+<p>See <a class="reference internal" href="nibabel.streamlines.html#module-nibabel.streamlines" title="nibabel.streamlines"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nibabel.streamlines</span></code></a> for the new interface.</p>
+<p>We will deprecate this, the old interface, in some future release.</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.trackvis.DataError" title="nibabel.trackvis.DataError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DataError</span></code></a></p></td>
+<td><p>Error in trackvis data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.trackvis.HeaderError" title="nibabel.trackvis.HeaderError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HeaderError</span></code></a></p></td>
+<td><p>Error in trackvis header</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.trackvis.TrackvisFile" title="nibabel.trackvis.TrackvisFile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrackvisFile</span></code></a>(streamlines[, mapping, …])</p></td>
+<td><p>Convenience class to encapsulate trackvis file information</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.trackvis.TrackvisFileError" title="nibabel.trackvis.TrackvisFileError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrackvisFileError</span></code></a></p></td>
+<td><p>Error from TrackvisFile class</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.trackvis.aff_from_hdr" title="nibabel.trackvis.aff_from_hdr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aff_from_hdr</span></code></a>(trk_hdr[, atleast_v2])</p></td>
+<td><p>Return voxel to mm affine from trackvis header</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.trackvis.aff_to_hdr" title="nibabel.trackvis.aff_to_hdr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">aff_to_hdr</span></code></a>(affine, trk_hdr[, pos_vox, set_order])</p></td>
+<td><p>Set affine <cite>affine</cite> into trackvis header <cite>trk_hdr</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.trackvis.empty_header" title="nibabel.trackvis.empty_header"><code class="xref py py-obj docutils literal notranslate"><span class="pre">empty_header</span></code></a>([endianness, version])</p></td>
+<td><p>Empty trackvis header</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.trackvis.read" title="nibabel.trackvis.read"><code class="xref py py-obj docutils literal notranslate"><span class="pre">read</span></code></a>(fileobj[, as_generator, points_space, …])</p></td>
+<td><p>Read trackvis file from <cite>fileobj</cite>, return <cite>streamlines</cite>, <cite>header</cite></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.trackvis.write" title="nibabel.trackvis.write"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write</span></code></a>(fileobj, streamlines[, hdr_mapping, …])</p></td>
+<td><p>Write header and <cite>streamlines</cite> to trackvis file <cite>fileobj</cite></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="dataerror">
+<h2><a class="reference internal" href="#nibabel.trackvis.DataError" title="nibabel.trackvis.DataError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataError</span></code></a><a class="headerlink" href="#dataerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.trackvis.DataError">
+<em class="property">class </em><code class="descclassname">nibabel.trackvis.</code><code class="descname">DataError</code><a class="headerlink" href="#nibabel.trackvis.DataError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Error in trackvis data</p>
+<dl class="method">
+<dt id="nibabel.trackvis.DataError.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.trackvis.DataError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="headererror">
+<h2><a class="reference internal" href="#nibabel.trackvis.HeaderError" title="nibabel.trackvis.HeaderError"><code class="xref py py-class docutils literal notranslate"><span class="pre">HeaderError</span></code></a><a class="headerlink" href="#headererror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.trackvis.HeaderError">
+<em class="property">class </em><code class="descclassname">nibabel.trackvis.</code><code class="descname">HeaderError</code><a class="headerlink" href="#nibabel.trackvis.HeaderError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Error in trackvis header</p>
+<dl class="method">
+<dt id="nibabel.trackvis.HeaderError.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.trackvis.HeaderError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="trackvisfile">
+<h2><a class="reference internal" href="#nibabel.trackvis.TrackvisFile" title="nibabel.trackvis.TrackvisFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackvisFile</span></code></a><a class="headerlink" href="#trackvisfile" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.trackvis.TrackvisFile">
+<em class="property">class </em><code class="descclassname">nibabel.trackvis.</code><code class="descname">TrackvisFile</code><span class="sig-paren">(</span><em>streamlines</em>, <em>mapping=None</em>, <em>endianness=None</em>, <em>filename=None</em>, <em>points_space=None</em>, <em>affine=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.trackvis.TrackvisFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Convenience class to encapsulate trackvis file information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>streamlines</strong><span class="classifier">sequence</span></dt><dd><p>sequence of streamlines.  This object does not accept generic iterables
+as input because these can be consumed and make the object unusable.
+Please use the function interface to work with generators / iterables</p>
+</dd>
+<dt><strong>mapping</strong><span class="classifier">None or mapping</span></dt><dd><p>Mapping defining header attributes</p>
+</dd>
+<dt><strong>endianness</strong><span class="classifier">{None, ‘&lt;’, ‘&gt;’}</span></dt><dd><p>Set here explicit endianness if required.  Endianness otherwise inferred
+from <cite>streamlines</cite></p>
+</dd>
+<dt><strong>filename</strong><span class="classifier">None or str, optional</span></dt><dd><p>filename</p>
+</dd>
+<dt><strong>points_space</strong><span class="classifier">{None, ‘voxel’, ‘rasmm’}, optional</span></dt><dd><p>Space in which streamline points are expressed in memory.  Default
+(None) means streamlines contain points in trackvis <em>voxmm</em> space
+(voxel positions * voxel sizes).  ‘voxel’ means points are in voxel
+space (and need to be multiplied by voxel size for saving in file).
+‘rasmm’ mean the points are expressed in mm space according to the
+affine.  See <code class="docutils literal notranslate"><span class="pre">read</span></code> and <code class="docutils literal notranslate"><span class="pre">write</span></code> function docstrings for more
+detail.</p>
+</dd>
+<dt><strong>affine</strong><span class="classifier">None or (4,4) ndarray, optional</span></dt><dd><p>Affine expressing relationship of voxels in an image to mm in RAS mm
+space. If ‘points_space’ is not None, you can use this to give the
+relationship between voxels, rasmm and voxmm space (above).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="nibabel.trackvis.TrackvisFile.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>streamlines</em>, <em>mapping=None</em>, <em>endianness=None</em>, <em>filename=None</em>, <em>points_space=None</em>, <em>affine=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.trackvis.TrackvisFile.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="nibabel.trackvis.TrackvisFile.from_file">
+<em class="property">classmethod </em><code class="descname">from_file</code><span class="sig-paren">(</span><em>file_like</em>, <em>points_space=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.trackvis.TrackvisFile.from_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.trackvis.TrackvisFile.get_affine">
+<code class="descname">get_affine</code><span class="sig-paren">(</span><em>atleast_v2=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.trackvis.TrackvisFile.get_affine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get affine from header in object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>aff</strong><span class="classifier">(4,4) ndarray</span></dt><dd><p>affine from header</p>
+</dd>
+<dt><strong>atleast_v2</strong><span class="classifier">None or bool, optional</span></dt><dd><p>See <code class="docutils literal notranslate"><span class="pre">aff_from_hdr</span></code> docstring for detail.  If True, require valid
+affine in <code class="docutils literal notranslate"><span class="pre">vox_to_ras</span></code> field of header.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>This method currently works for trackvis version 1 headers, but we
+consider it unsafe for version 1 headers, and in future versions of
+nibabel we will raise an error for trackvis headers &lt; version 2.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.trackvis.TrackvisFile.set_affine">
+<code class="descname">set_affine</code><span class="sig-paren">(</span><em>affine</em>, <em>pos_vox=None</em>, <em>set_order=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.trackvis.TrackvisFile.set_affine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set affine <cite>affine</cite> into trackvis header</p>
+<p>Affine is mapping from voxel space to Nifti RAS) output coordinate
+system convention; x: Left -&gt; Right, y: Posterior -&gt; Anterior, z:
+Inferior -&gt; Superior.  Sets affine if possible, and voxel sizes, and
+voxel axis ordering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>affine</strong><span class="classifier">(4,4) array-like</span></dt><dd><p>Affine voxel to mm transformation</p>
+</dd>
+<dt><strong>pos_vos</strong><span class="classifier">None or bool, optional</span></dt><dd><p>If None, currently defaults to False - this will change in future
+versions of nibabel.  If False, allow negative voxel sizes in
+header to record axis flips.  Negative voxels cause problems for
+trackvis (the application).  If True, enforce positive voxel sizes.</p>
+</dd>
+<dt><strong>set_order</strong><span class="classifier">None or bool, optional</span></dt><dd><p>If None, currently defaults to False - this will change in future
+versions of nibabel.  If False, do not set <code class="docutils literal notranslate"><span class="pre">voxel_order</span></code> field in
+<cite>trk_hdr</cite>.  If True, calculcate <code class="docutils literal notranslate"><span class="pre">voxel_order</span></code> from <cite>affine</cite> and
+set into <cite>trk_hdr</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>None</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.trackvis.TrackvisFile.to_file">
+<code class="descname">to_file</code><span class="sig-paren">(</span><em>file_like</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.trackvis.TrackvisFile.to_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="trackvisfileerror">
+<h2><a class="reference internal" href="#nibabel.trackvis.TrackvisFileError" title="nibabel.trackvis.TrackvisFileError"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrackvisFileError</span></code></a><a class="headerlink" href="#trackvisfileerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.trackvis.TrackvisFileError">
+<em class="property">class </em><code class="descclassname">nibabel.trackvis.</code><code class="descname">TrackvisFileError</code><a class="headerlink" href="#nibabel.trackvis.TrackvisFileError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Error from TrackvisFile class</p>
+<dl class="method">
+<dt id="nibabel.trackvis.TrackvisFileError.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.trackvis.TrackvisFileError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="aff-from-hdr">
+<h2>aff_from_hdr<a class="headerlink" href="#aff-from-hdr" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.trackvis.aff_from_hdr">
+<code class="descclassname">nibabel.trackvis.</code><code class="descname">aff_from_hdr</code><span class="sig-paren">(</span><em>trk_hdr</em>, <em>atleast_v2=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.trackvis.aff_from_hdr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return voxel to mm affine from trackvis header</p>
+<p>Affine is mapping from voxel space to Nifti (RAS) output coordinate
+system convention; x: Left -&gt; Right, y: Posterior -&gt; Anterior, z:
+Inferior -&gt; Superior.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>trk_hdr</strong><span class="classifier">mapping</span></dt><dd><p>Mapping with trackvis header keys <code class="docutils literal notranslate"><span class="pre">version</span></code>. If <code class="docutils literal notranslate"><span class="pre">version</span> <span class="pre">==</span> <span class="pre">2</span></code>, we
+also expect <code class="docutils literal notranslate"><span class="pre">vox_to_ras</span></code>.</p>
+</dd>
+<dt><strong>atleast_v2</strong><span class="classifier">None or bool</span></dt><dd><p>If None, currently defaults to False.  This will change to True in
+future versions.  If True, require that there is a valid ‘vox_to_ras’
+affine, raise HeaderError otherwise.  If False, look for valid
+‘vox_to_ras’ affine, but fall back to best guess from version 1 fields
+otherwise.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>aff</strong><span class="classifier">(4,4) array</span></dt><dd><p>affine giving mapping from voxel coordinates (affine applied on
+the left to points on the right) to millimeter coordinates in the
+RAS coordinate system</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Our initial idea was to try and work round the deficiencies of the version
+1 format by using the DICOM orientation fields to store the affine.  This
+proved difficult in practice because trackvis (the application) doesn’t
+allow negative voxel sizes (needed for recording axis flips) and sets the
+origin field to 0. In future, we’ll raise an error rather than try and
+estimate the affine from version 1 fields</p>
+</dd></dl>
+
+</div>
+<div class="section" id="aff-to-hdr">
+<h2>aff_to_hdr<a class="headerlink" href="#aff-to-hdr" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.trackvis.aff_to_hdr">
+<code class="descclassname">nibabel.trackvis.</code><code class="descname">aff_to_hdr</code><span class="sig-paren">(</span><em>affine</em>, <em>trk_hdr</em>, <em>pos_vox=None</em>, <em>set_order=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.trackvis.aff_to_hdr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set affine <cite>affine</cite> into trackvis header <cite>trk_hdr</cite></p>
+<p>Affine is mapping from voxel space to Nifti RAS) output coordinate
+system convention; x: Left -&gt; Right, y: Posterior -&gt; Anterior, z:
+Inferior -&gt; Superior.  Sets affine if possible, and voxel sizes, and voxel
+axis ordering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>affine</strong><span class="classifier">(4,4) array-like</span></dt><dd><p>Affine voxel to mm transformation</p>
+</dd>
+<dt><strong>trk_hdr</strong><span class="classifier">mapping</span></dt><dd><p>Mapping implementing __setitem__</p>
+</dd>
+<dt><strong>pos_vos</strong><span class="classifier">None or bool</span></dt><dd><p>If None, currently defaults to False - this will change in future
+versions of nibabel.  If False, allow negative voxel sizes in header to
+record axis flips.  Negative voxels cause problems for trackvis (the
+application).  If True, enforce positive voxel sizes.</p>
+</dd>
+<dt><strong>set_order</strong><span class="classifier">None or bool</span></dt><dd><p>If None, currently defaults to False - this will change in future
+versions of nibabel.  If False, do not set <code class="docutils literal notranslate"><span class="pre">voxel_order</span></code> field in
+<cite>trk_hdr</cite>.  If True, calculcate <code class="docutils literal notranslate"><span class="pre">voxel_order</span></code> from <cite>affine</cite> and set
+into <cite>trk_hdr</cite>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>None</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>version 2 of the trackvis header has a dedicated field for the nifti RAS
+affine. In theory trackvis 1 has enough information to store an affine,
+with the fields ‘origin’, ‘voxel_size’ and ‘image_orientation_patient’.
+Unfortunately, to be able to store any affine, we’d need to be able to set
+negative voxel sizes, to encode axis flips. This is because
+‘image_orientation_patient’ is only two columns of the 3x3 rotation matrix,
+and we need to know the number of flips to reconstruct the third column
+reliably.  It turns out that negative flips upset trackvis (the
+application).  The application also ignores the origin field, and may not
+use the ‘image_orientation_patient’ field.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="empty-header">
+<h2>empty_header<a class="headerlink" href="#empty-header" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.trackvis.empty_header">
+<code class="descclassname">nibabel.trackvis.</code><code class="descname">empty_header</code><span class="sig-paren">(</span><em>endianness=None</em>, <em>version=2</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.trackvis.empty_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>Empty trackvis header</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>endianness</strong><span class="classifier">{‘&lt;’,’&gt;’}, optional</span></dt><dd><p>Endianness of empty header to return. Default is native endian.</p>
+</dd>
+<dt><strong>version</strong><span class="classifier">int, optional</span></dt><dd><p>Header version.  1 or 2.  Default is 2</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>hdr</strong><span class="classifier">structured array</span></dt><dd><p>structured array containing empty trackvis header</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The trackvis header can store enough information to give an affine
+mapping between voxel and world space.  Often this information is
+missing.  We make no attempt to fill it with sensible defaults on
+the basis that, if the information is missing, it is better to be
+explicit.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hdr</span> <span class="o">=</span> <span class="n">empty_header</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">])</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;id_string&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">==</span> <span class="sa">b</span><span class="s1">&#39;TRACK&#39;</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">endian_codes</span><span class="p">[</span><span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">byteorder</span><span class="p">]</span> <span class="o">==</span> <span class="n">native_code</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hdr</span> <span class="o">=</span> <span class="n">empty_header</span><span class="p">(</span><span class="n">swapped_code</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">endian_codes</span><span class="p">[</span><span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">byteorder</span><span class="p">]</span> <span class="o">==</span> <span class="n">swapped_code</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hdr</span> <span class="o">=</span> <span class="n">empty_header</span><span class="p">(</span><span class="n">version</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">hdr</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">])</span>
+<span class="go">1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="read">
+<h2>read<a class="headerlink" href="#read" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.trackvis.read">
+<code class="descclassname">nibabel.trackvis.</code><code class="descname">read</code><span class="sig-paren">(</span><em>fileobj</em>, <em>as_generator=False</em>, <em>points_space=None</em>, <em>strict=True</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.trackvis.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read trackvis file from <cite>fileobj</cite>, return <cite>streamlines</cite>, <cite>header</cite></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>fileobj</strong><span class="classifier">string or file-like object</span></dt><dd><p>If string, a filename; otherwise an open file-like object
+pointing to trackvis file (and ready to read from the beginning
+of the trackvis header data)</p>
+</dd>
+<dt><strong>as_generator</strong><span class="classifier">bool, optional</span></dt><dd><p>Whether to return tracks as sequence (False, default) or as a generator
+(True).</p>
+</dd>
+<dt><strong>points_space</strong><span class="classifier">{None, ‘voxel’, ‘rasmm’}, optional</span></dt><dd><p>The coordinates in which you want the points in the <em>output</em>
+streamlines expressed.  If None, then return the points exactly as they
+are stored in the trackvis file. The points will probably be in
+trackvis voxmm space - see Notes for <code class="docutils literal notranslate"><span class="pre">write</span></code> function.  If ‘voxel’,
+we convert the points to voxel space simply by dividing by the recorded
+voxel size.  If ‘rasmm’ we’ll convert the points to RAS mm space (real
+space). For ‘rasmm’ we check if the affine is set and matches the voxel
+sizes and voxel order.</p>
+</dd>
+<dt><strong>strict</strong><span class="classifier">{True, False}, optional</span></dt><dd><p>If True, raise error on read for badly-formed file.  If False, let pass
+files with last track having too few points.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>streamlines</strong><span class="classifier">sequence or generator</span></dt><dd><p>Returns sequence if <cite>as_generator</cite> is False, generator if True.  Value
+is sequence or generator of 3 element sequences with elements:</p>
+<ol class="arabic simple">
+<li><p>points : ndarray shape (N,3)
+where N is the number of points</p></li>
+<li><p>scalars : None or ndarray shape (N, M)
+where M is the number of scalars per point</p></li>
+<li><p>properties : None or ndarray shape (P,)
+where P is the number of properties</p></li>
+</ol>
+</dd>
+<dt><strong>hdr</strong><span class="classifier">structured array</span></dt><dd><p>structured array with trackvis header fields</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>The endianness of the input data can be deduced from the endianness
+of the returned <cite>hdr</cite> or <cite>streamlines</cite></p>
+<p>Points are in trackvis <em>voxel mm</em>.  Each track has N points, each with 3
+coordinates, <code class="docutils literal notranslate"><span class="pre">x,</span> <span class="pre">y,</span> <span class="pre">z</span></code>, where <code class="docutils literal notranslate"><span class="pre">x</span></code> is the floating point voxel
+coordinate along the first image axis, multiplied by the voxel size for
+that axis.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="write">
+<h2>write<a class="headerlink" href="#write" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.trackvis.write">
+<code class="descclassname">nibabel.trackvis.</code><code class="descname">write</code><span class="sig-paren">(</span><em>fileobj</em>, <em>streamlines</em>, <em>hdr_mapping=None</em>, <em>endianness=None</em>, <em>points_space=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.trackvis.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write header and <cite>streamlines</cite> to trackvis file <cite>fileobj</cite></p>
+<p>The parameters from the streamlines override conflicting parameters
+in the <cite>hdr_mapping</cite> information.  In particular, the number of
+streamlines, the number of scalars, and the number of properties are
+written according to <cite>streamlines</cite> rather than <cite>hdr_mapping</cite>.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>fileobj</strong><span class="classifier">filename or file-like</span></dt><dd><p>If filename, open file as ‘wb’, otherwise <cite>fileobj</cite> should be an
+open file-like object, with a <code class="docutils literal notranslate"><span class="pre">write</span></code> method.</p>
+</dd>
+<dt><strong>streamlines</strong><span class="classifier">iterable</span></dt><dd><p>iterable returning 3 element sequences with elements:</p>
+<ol class="arabic simple">
+<li><p>points : ndarray shape (N,3)
+where N is the number of points</p></li>
+<li><p>scalars : None or ndarray shape (N, M)
+where M is the number of scalars per point</p></li>
+<li><p>properties : None or ndarray shape (P,)
+where P is the number of properties</p></li>
+</ol>
+<p>If <cite>streamlines</cite> has a <code class="docutils literal notranslate"><span class="pre">len</span></code> (for example, it is a list or a tuple),
+then we can write the number of streamlines into the header.  Otherwise
+we write 0 for the number of streamlines (a valid trackvis header) and
+write streamlines into the file until the iterable is exhausted.
+M - the number of scalars - has to be the same for each streamline in
+<cite>streamlines</cite>.  Similarly for P. See <cite>points_space</cite> and Notes for more
+detail on the coordinate system for <code class="docutils literal notranslate"><span class="pre">points</span></code> above.</p>
+</dd>
+<dt><strong>hdr_mapping</strong><span class="classifier">None, ndarray or mapping, optional</span></dt><dd><p>Information for filling header fields.  Can be something
+dict-like (implementing <code class="docutils literal notranslate"><span class="pre">items</span></code>) or a structured numpy array</p>
+</dd>
+<dt><strong>endianness</strong><span class="classifier">{None, ‘&lt;’, ‘&gt;’}, optional</span></dt><dd><p>Endianness of file to be written.  ‘&lt;’ is little-endian, ‘&gt;’ is
+big-endian.  None (the default) is to use the endianness of the
+<cite>streamlines</cite> data.</p>
+</dd>
+<dt><strong>points_space</strong><span class="classifier">{None, ‘voxel’, ‘rasmm’}, optional</span></dt><dd><p>The coordinates in which the points in the input streamlines are
+expressed.  If None, then assume the points are as you want them
+(probably trackvis voxmm space - see Notes).  If ‘voxel’, the points
+are in voxel space, and we will transform them to trackvis voxmm space.
+If ‘rasmm’ the points are in RAS mm space (real space).  We transform
+them to trackvis voxmm space.  If ‘voxel’ or ‘rasmm’ we insist that the
+voxel sizes and ordering are set to non-default values.  If ‘rasmm’ we
+also check if the affine is set and matches the voxel sizes</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>None</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p>Trackvis (the application) expects the <code class="docutils literal notranslate"><span class="pre">points</span></code> in the streamlines be in
+what we call <em>trackvis voxmm</em> coordinates.  If we have a point (x, y, z) in
+voxmm coordinates, and <code class="docutils literal notranslate"><span class="pre">voxel_size</span></code> has the voxel sizes for each of the 3
+dimensions, then x, y, z refer to mm in voxel space. Thus if i, j, k is a
+point in voxel coordinates, then <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">i</span> <span class="pre">*</span> <span class="pre">voxel_size[0];</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">j</span> <span class="pre">*</span>
+<span class="pre">voxel_size[1];</span> <span class="pre">z</span> <span class="pre">=</span> <span class="pre">k</span> <span class="pre">*</span> <span class="pre">voxel_size[2]</span></code>.   The spatial direction of x, y and
+z are defined with the “voxel_order” field.  For example, if the original
+image had RAS voxel ordering then “voxel_order” would be “RAS”.  RAS here
+refers to the spatial direction of the voxel axes: “R” means that moving
+along first voxel axis moves from left to right in space, “A” -&gt; second
+axis goes from posterior to anterior, “S” -&gt; inferior to superior.  If
+“voxel_order” is empty we assume “LPS”.</p>
+<p>This information comes from some helpful replies on the trackvis forum
+about <a class="reference external" href="http://trackvis.org/blog/forum/diffusion-toolkit-usage/interpretation-of-track-point-coordinates">interpreting point coordiantes</a></p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">BytesIO</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">file_obj</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pts0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pts1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">streamlines</span> <span class="o">=</span> <span class="p">([(</span><span class="n">pts0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span> <span class="p">(</span><span class="n">pts1</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">write</span><span class="p">(</span><span class="n">file_obj</span><span class="p">,</span> <span class="n">streamlines</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">file_obj</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># returns 0 in python 3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">streams</span><span class="p">,</span> <span class="n">hdr</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">file_obj</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">streams</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+<p>If there are too many streamlines to fit in memory, you can pass an
+iterable thing instead of a list</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">file_obj</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">gen</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">yield</span> <span class="p">(</span><span class="n">pts0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">yield</span> <span class="p">(</span><span class="n">pts0</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">write</span><span class="p">(</span><span class="n">file_obj</span><span class="p">,</span> <span class="n">gen</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">_</span> <span class="o">=</span> <span class="n">file_obj</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">streams</span><span class="p">,</span> <span class="n">hdr</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">file_obj</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">streams</span><span class="p">)</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

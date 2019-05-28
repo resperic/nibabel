@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="viewers" href="nibabel.viewers.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.viewers.html" title="viewers"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" >API Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlutils</span></code></a><ul>
+<li><a class="reference internal" href="#xmlbasedheader"><code class="xref py py-class docutils literal notranslate"><span class="pre">XmlBasedHeader</span></code></a></li>
+<li><a class="reference internal" href="#xmlparser"><code class="xref py py-class docutils literal notranslate"><span class="pre">XmlParser</span></code></a></li>
+<li><a class="reference internal" href="#xmlserializable"><code class="xref py py-class docutils literal notranslate"><span class="pre">XmlSerializable</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.viewers.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">viewers</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.xmlutils.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.xmlutils">
+<span id="xmlutils"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlutils</span></code><a class="headerlink" href="#module-nibabel.xmlutils" title="Permalink to this headline">¶</a></h1>
+<p>Thin layer around xml.etree.ElementTree, to abstract nibabel xml support.</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.xmlutils.XmlBasedHeader" title="nibabel.xmlutils.XmlBasedHeader"><code class="xref py py-obj docutils literal notranslate"><span class="pre">XmlBasedHeader</span></code></a></p></td>
+<td><p>Basic wrapper around FileBasedHeader and XmlSerializable.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.xmlutils.XmlParser" title="nibabel.xmlutils.XmlParser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">XmlParser</span></code></a>([encoding, buffer_size, verbose])</p></td>
+<td><p>Base class for defining how to parse xml-based image snippets.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">XmlSerializable</span></code></a></p></td>
+<td><p>Basic interface for serializing an object to xml</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="xmlbasedheader">
+<h2><a class="reference internal" href="#nibabel.xmlutils.XmlBasedHeader" title="nibabel.xmlutils.XmlBasedHeader"><code class="xref py py-class docutils literal notranslate"><span class="pre">XmlBasedHeader</span></code></a><a class="headerlink" href="#xmlbasedheader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.xmlutils.XmlBasedHeader">
+<em class="property">class </em><code class="descclassname">nibabel.xmlutils.</code><code class="descname">XmlBasedHeader</code><a class="headerlink" href="#nibabel.xmlutils.XmlBasedHeader" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.filebasedimages.html#nibabel.filebasedimages.FileBasedHeader" title="nibabel.filebasedimages.FileBasedHeader"><code class="xref py py-class docutils literal notranslate"><span class="pre">nibabel.filebasedimages.FileBasedHeader</span></code></a>, <a class="reference internal" href="#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal notranslate"><span class="pre">nibabel.xmlutils.XmlSerializable</span></code></a></p>
+<p>Basic wrapper around FileBasedHeader and XmlSerializable.</p>
+<dl class="method">
+<dt id="nibabel.xmlutils.XmlBasedHeader.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.xmlutils.XmlBasedHeader.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="xmlparser">
+<h2><a class="reference internal" href="#nibabel.xmlutils.XmlParser" title="nibabel.xmlutils.XmlParser"><code class="xref py py-class docutils literal notranslate"><span class="pre">XmlParser</span></code></a><a class="headerlink" href="#xmlparser" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.xmlutils.XmlParser">
+<em class="property">class </em><code class="descclassname">nibabel.xmlutils.</code><code class="descname">XmlParser</code><span class="sig-paren">(</span><em>encoding='utf-8'</em>, <em>buffer_size=35000000</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.xmlutils.XmlParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Base class for defining how to parse xml-based image snippets.</p>
+<dl class="simple">
+<dt>Image-specific parsers should define:</dt><dd><p>StartElementHandler
+EndElementHandler
+CharacterDataHandler</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>encoding</strong><span class="classifier">str</span></dt><dd><p>string containing xml document</p>
+</dd>
+<dt><strong>buffer_size: None or int, optional</strong></dt><dd><p>size of read buffer. None uses default buffer_size
+from xml.parsers.expat.</p>
+</dd>
+<dt><strong>verbose</strong><span class="classifier">int, optional</span></dt><dd><p>amount of output during parsing (0=silent, by default).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="nibabel.xmlutils.XmlParser.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>encoding='utf-8'</em>, <em>buffer_size=35000000</em>, <em>verbose=0</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.xmlutils.XmlParser.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>encoding</strong><span class="classifier">str</span></dt><dd><p>string containing xml document</p>
+</dd>
+<dt><strong>buffer_size: None or int, optional</strong></dt><dd><p>size of read buffer. None uses default buffer_size
+from xml.parsers.expat.</p>
+</dd>
+<dt><strong>verbose</strong><span class="classifier">int, optional</span></dt><dd><p>amount of output during parsing (0=silent, by default).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.xmlutils.XmlParser.CharacterDataHandler">
+<code class="descname">CharacterDataHandler</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.xmlutils.XmlParser.CharacterDataHandler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.xmlutils.XmlParser.EndElementHandler">
+<code class="descname">EndElementHandler</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.xmlutils.XmlParser.EndElementHandler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.xmlutils.XmlParser.HANDLER_NAMES">
+<code class="descname">HANDLER_NAMES</code><em class="property"> = ['StartElementHandler', 'EndElementHandler', 'CharacterDataHandler']</em><a class="headerlink" href="#nibabel.xmlutils.XmlParser.HANDLER_NAMES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.xmlutils.XmlParser.StartElementHandler">
+<code class="descname">StartElementHandler</code><span class="sig-paren">(</span><em>name</em>, <em>attrs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.xmlutils.XmlParser.StartElementHandler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.xmlutils.XmlParser.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>string=None</em>, <em>fname=None</em>, <em>fptr=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.xmlutils.XmlParser.parse" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>string</strong><span class="classifier">str</span></dt><dd><p>string containing xml document</p>
+</dd>
+<dt><strong>fname</strong><span class="classifier">str</span></dt><dd><p>file name of an xml document.</p>
+</dd>
+<dt><strong>fptr</strong><span class="classifier">file pointer</span></dt><dd><p>open file pointer to an xml documents</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="xmlserializable">
+<h2><a class="reference internal" href="#nibabel.xmlutils.XmlSerializable" title="nibabel.xmlutils.XmlSerializable"><code class="xref py py-class docutils literal notranslate"><span class="pre">XmlSerializable</span></code></a><a class="headerlink" href="#xmlserializable" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.xmlutils.XmlSerializable">
+<em class="property">class </em><code class="descclassname">nibabel.xmlutils.</code><code class="descname">XmlSerializable</code><a class="headerlink" href="#nibabel.xmlutils.XmlSerializable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Basic interface for serializing an object to xml</p>
+<dl class="method">
+<dt id="nibabel.xmlutils.XmlSerializable.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.xmlutils.XmlSerializable.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.xmlutils.XmlSerializable.to_xml">
+<code class="descname">to_xml</code><span class="sig-paren">(</span><em>enc='utf-8'</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.xmlutils.XmlSerializable.to_xml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output should be an xml string with the given encoding.
+(default: utf-8)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

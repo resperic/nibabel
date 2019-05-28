@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="fileslice" href="nibabel.fileslice.html" />
+    <link rel="prev" title="fileholders" href="nibabel.fileholders.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.fileslice.html" title="fileslice"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.fileholders.html" title="fileholders"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" accesskey="U">API Documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">filename_parser</span></code></a><ul>
+<li><a class="reference internal" href="#typesfilenameserror"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypesFilenamesError</span></code></a></li>
+<li><a class="reference internal" href="#parse-filename">parse_filename</a></li>
+<li><a class="reference internal" href="#splitext-addext">splitext_addext</a></li>
+<li><a class="reference internal" href="#types-filenames">types_filenames</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.fileholders.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileholders</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.fileslice.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileslice</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.filename_parser.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.filename_parser">
+<span id="filename-parser"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">filename_parser</span></code><a class="headerlink" href="#module-nibabel.filename_parser" title="Permalink to this headline">¶</a></h1>
+<p>Create filename pairs, triplets etc, with expected extensions</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.filename_parser.TypesFilenamesError" title="nibabel.filename_parser.TypesFilenamesError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TypesFilenamesError</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.filename_parser.parse_filename" title="nibabel.filename_parser.parse_filename"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_filename</span></code></a>(filename, types_exts, …[, …])</p></td>
+<td><p>Split filename into fileroot, extension, trailing suffix; guess type.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.filename_parser.splitext_addext" title="nibabel.filename_parser.splitext_addext"><code class="xref py py-obj docutils literal notranslate"><span class="pre">splitext_addext</span></code></a>(filename[, addexts, match_case])</p></td>
+<td><p>Split <code class="docutils literal notranslate"><span class="pre">/pth/fname.ext.gz</span></code> into <code class="docutils literal notranslate"><span class="pre">/pth/fname,</span> <span class="pre">.ext,</span> <span class="pre">.gz</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.filename_parser.types_filenames" title="nibabel.filename_parser.types_filenames"><code class="xref py py-obj docutils literal notranslate"><span class="pre">types_filenames</span></code></a>(template_fname, types_exts)</p></td>
+<td><p>Return filenames with standard extensions from template name</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="typesfilenameserror">
+<h2><a class="reference internal" href="#nibabel.filename_parser.TypesFilenamesError" title="nibabel.filename_parser.TypesFilenamesError"><code class="xref py py-class docutils literal notranslate"><span class="pre">TypesFilenamesError</span></code></a><a class="headerlink" href="#typesfilenameserror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.filename_parser.TypesFilenamesError">
+<em class="property">class </em><code class="descclassname">nibabel.filename_parser.</code><code class="descname">TypesFilenamesError</code><a class="headerlink" href="#nibabel.filename_parser.TypesFilenamesError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<dl class="method">
+<dt id="nibabel.filename_parser.TypesFilenamesError.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.filename_parser.TypesFilenamesError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="parse-filename">
+<h2>parse_filename<a class="headerlink" href="#parse-filename" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.filename_parser.parse_filename">
+<code class="descclassname">nibabel.filename_parser.</code><code class="descname">parse_filename</code><span class="sig-paren">(</span><em>filename</em>, <em>types_exts</em>, <em>trailing_suffixes</em>, <em>match_case=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.filename_parser.parse_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split filename into fileroot, extension, trailing suffix; guess type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>filename in which to search for type extensions</p>
+</dd>
+<dt><strong>types_exts</strong><span class="classifier">sequence of sequences</span></dt><dd><p>sequence of (name, extension) str sequences defining type to
+extension mapping.</p>
+</dd>
+<dt><strong>trailing_suffixes</strong><span class="classifier">sequence of strings</span></dt><dd><p>suffixes that should be ignored when looking for
+extensions</p>
+</dd>
+<dt><strong>match_case</strong><span class="classifier">bool, optional</span></dt><dd><p>If True, match case of extensions and trailing suffixes when
+searching in <cite>filename</cite>, otherwise do case-insensitive match.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>pth</strong><span class="classifier">str</span></dt><dd><p>path with any matching extensions or trailing suffixes removed</p>
+</dd>
+<dt><strong>ext</strong><span class="classifier">str</span></dt><dd><p>If there were any matching extensions, in <cite>types_exts</cite> return
+that; otherwise return extension derived from
+<code class="docutils literal notranslate"><span class="pre">os.path.splitext</span></code>.</p>
+</dd>
+<dt><strong>trailing</strong><span class="classifier">str</span></dt><dd><p>If there were any matching <cite>trailing_suffixes</cite> return that
+matching suffix, otherwise ‘’</p>
+</dd>
+<dt><strong>guessed_type</strong><span class="classifier">str</span></dt><dd><p>If we found a matching extension in <cite>types_exts</cite> return the
+corresponding <code class="docutils literal notranslate"><span class="pre">type</span></code></p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">types_exts</span> <span class="o">=</span> <span class="p">((</span><span class="s1">&#39;t1&#39;</span><span class="p">,</span> <span class="s1">&#39;ext1&#39;</span><span class="p">),(</span><span class="s1">&#39;t2&#39;</span><span class="p">,</span> <span class="s1">&#39;ext2&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_filename</span><span class="p">(</span><span class="s1">&#39;/path/fname.funny&#39;</span><span class="p">,</span> <span class="n">types_exts</span><span class="p">,</span> <span class="p">())</span>
+<span class="go">(&#39;/path/fname&#39;, &#39;.funny&#39;, None, None)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_filename</span><span class="p">(</span><span class="s1">&#39;/path/fnameext2&#39;</span><span class="p">,</span> <span class="n">types_exts</span><span class="p">,</span> <span class="p">())</span>
+<span class="go">(&#39;/path/fname&#39;, &#39;ext2&#39;, None, &#39;t2&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_filename</span><span class="p">(</span><span class="s1">&#39;/path/fnameext2&#39;</span><span class="p">,</span> <span class="n">types_exts</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;.gz&#39;</span><span class="p">,))</span>
+<span class="go">(&#39;/path/fname&#39;, &#39;ext2&#39;, None, &#39;t2&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parse_filename</span><span class="p">(</span><span class="s1">&#39;/path/fnameext2.gz&#39;</span><span class="p">,</span> <span class="n">types_exts</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;.gz&#39;</span><span class="p">,))</span>
+<span class="go">(&#39;/path/fname&#39;, &#39;ext2&#39;, &#39;.gz&#39;, &#39;t2&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="splitext-addext">
+<h2>splitext_addext<a class="headerlink" href="#splitext-addext" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.filename_parser.splitext_addext">
+<code class="descclassname">nibabel.filename_parser.</code><code class="descname">splitext_addext</code><span class="sig-paren">(</span><em>filename</em>, <em>addexts=('.gz'</em>, <em>'.bz2')</em>, <em>match_case=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.filename_parser.splitext_addext" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split <code class="docutils literal notranslate"><span class="pre">/pth/fname.ext.gz</span></code> into <code class="docutils literal notranslate"><span class="pre">/pth/fname,</span> <span class="pre">.ext,</span> <span class="pre">.gz</span></code></p>
+<p>where <code class="docutils literal notranslate"><span class="pre">.gz</span></code> may be any of passed <cite>addext</cite> trailing suffixes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>filename that may end in any or none of <cite>addexts</cite></p>
+</dd>
+<dt><strong>match_case</strong><span class="classifier">bool, optional</span></dt><dd><p>If True, match case of <cite>addexts</cite> and <cite>filename</cite>, otherwise do
+case-insensitive match.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>froot</strong><span class="classifier">str</span></dt><dd><p>Root of filename - e.g. <code class="docutils literal notranslate"><span class="pre">/pth/fname</span></code> in example above</p>
+</dd>
+<dt><strong>ext</strong><span class="classifier">str</span></dt><dd><p>Extension, where extension is not in <cite>addexts</cite> - e.g. <code class="docutils literal notranslate"><span class="pre">.ext</span></code> in
+example above</p>
+</dd>
+<dt><strong>addext</strong><span class="classifier">str</span></dt><dd><p>Any suffixes appearing in <cite>addext</cite> occuring at end of filename</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">splitext_addext</span><span class="p">(</span><span class="s1">&#39;fname.ext.gz&#39;</span><span class="p">)</span>
+<span class="go">(&#39;fname&#39;, &#39;.ext&#39;, &#39;.gz&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">splitext_addext</span><span class="p">(</span><span class="s1">&#39;fname.ext&#39;</span><span class="p">)</span>
+<span class="go">(&#39;fname&#39;, &#39;.ext&#39;, &#39;&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">splitext_addext</span><span class="p">(</span><span class="s1">&#39;fname.ext.foo&#39;</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;.foo&#39;</span><span class="p">,</span> <span class="s1">&#39;.bar&#39;</span><span class="p">))</span>
+<span class="go">(&#39;fname&#39;, &#39;.ext&#39;, &#39;.foo&#39;)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="types-filenames">
+<h2>types_filenames<a class="headerlink" href="#types-filenames" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.filename_parser.types_filenames">
+<code class="descclassname">nibabel.filename_parser.</code><code class="descname">types_filenames</code><span class="sig-paren">(</span><em>template_fname</em>, <em>types_exts</em>, <em>trailing_suffixes=('.gz'</em>, <em>'.bz2')</em>, <em>enforce_extensions=True</em>, <em>match_case=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.filename_parser.types_filenames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return filenames with standard extensions from template name</p>
+<p>The typical case is returning image and header filenames for an
+Analyze image, that expects an ‘image’ file type with extension <code class="docutils literal notranslate"><span class="pre">.img</span></code>,
+and a ‘header’ file type, with extension <code class="docutils literal notranslate"><span class="pre">.hdr</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>template_fname</strong><span class="classifier">str</span></dt><dd><p>template filename from which to construct output dict of
+filenames, with given <cite>types_exts</cite> type to extension mapping.  If
+<code class="docutils literal notranslate"><span class="pre">self.enforce_extensions</span></code> is True, then filename must have one
+of the defined extensions from the types list.  If
+<code class="docutils literal notranslate"><span class="pre">self.enforce_extensions</span></code> is False, then the other filenames
+are guessed at by adding extensions to the base filename.
+Ignored suffixes (from <cite>trailing_suffixes</cite>) append themselves to
+the end of all the filenames.</p>
+</dd>
+<dt><strong>types_exts</strong><span class="classifier">sequence of sequences</span></dt><dd><p>sequence of (name, extension) str sequences defining type to
+extension mapping.</p>
+</dd>
+<dt><strong>trailing_suffixes</strong><span class="classifier">sequence of strings, optional</span></dt><dd><p>suffixes that should be ignored when looking for
+extensions - default is <code class="docutils literal notranslate"><span class="pre">('.gz',</span> <span class="pre">'.bz2')</span></code></p>
+</dd>
+<dt><strong>enforce_extensions</strong><span class="classifier">{True, False}, optional</span></dt><dd><p>If True, raise an error when attempting to set value to
+type which has the wrong extension</p>
+</dd>
+<dt><strong>match_case</strong><span class="classifier">bool, optional</span></dt><dd><p>If True, match case of extensions and trailing suffixes when
+searching in <cite>template_fname</cite>, otherwise do case-insensitive
+match.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>types_fnames</strong><span class="classifier">dict</span></dt><dd><p>dict with types as keys, and generated filenames as values.  The
+types are given by the first elements of the tuples in
+<cite>types_exts</cite>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">types_exts</span> <span class="o">=</span> <span class="p">((</span><span class="s1">&#39;t1&#39;</span><span class="p">,</span><span class="s1">&#39;.ext1&#39;</span><span class="p">),(</span><span class="s1">&#39;t2&#39;</span><span class="p">,</span> <span class="s1">&#39;.ext2&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tfns</span> <span class="o">=</span> <span class="n">types_filenames</span><span class="p">(</span><span class="s1">&#39;/path/test.ext1&#39;</span><span class="p">,</span> <span class="n">types_exts</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tfns</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;t1&#39;</span><span class="p">:</span> <span class="s1">&#39;/path/test.ext1&#39;</span><span class="p">,</span> <span class="s1">&#39;t2&#39;</span><span class="p">:</span> <span class="s1">&#39;/path/test.ext2&#39;</span><span class="p">}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Bare file roots without extensions get them added</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tfns</span> <span class="o">=</span> <span class="n">types_filenames</span><span class="p">(</span><span class="s1">&#39;/path/test&#39;</span><span class="p">,</span> <span class="n">types_exts</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tfns</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;t1&#39;</span><span class="p">:</span> <span class="s1">&#39;/path/test.ext1&#39;</span><span class="p">,</span> <span class="s1">&#39;t2&#39;</span><span class="p">:</span> <span class="s1">&#39;/path/test.ext2&#39;</span><span class="p">}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>With enforce_extensions == False, allow first type to have any
+extension.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">tfns</span> <span class="o">=</span> <span class="n">types_filenames</span><span class="p">(</span><span class="s1">&#39;/path/test.funny&#39;</span><span class="p">,</span> <span class="n">types_exts</span><span class="p">,</span>
+<span class="gp">... </span>                       <span class="n">enforce_extensions</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tfns</span> <span class="o">==</span> <span class="p">{</span><span class="s1">&#39;t1&#39;</span><span class="p">:</span> <span class="s1">&#39;/path/test.funny&#39;</span><span class="p">,</span> <span class="s1">&#39;t2&#39;</span><span class="p">:</span> <span class="s1">&#39;/path/test.ext2&#39;</span><span class="p">}</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

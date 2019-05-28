@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="deprecator" href="nibabel.deprecator.html" />
+    <link rel="prev" title="dataobj_images" href="nibabel.dataobj_images.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.deprecator.html" title="deprecator"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.dataobj_images.html" title="dataobj_images"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" >API Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">deprecated</span></code></a><ul>
+<li><a class="reference internal" href="#futurewarningmixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">FutureWarningMixin</span></code></a></li>
+<li><a class="reference internal" href="#moduleproxy"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModuleProxy</span></code></a></li>
+<li><a class="reference internal" href="#visibledeprecationwarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">VisibleDeprecationWarning</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.dataobj_images.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataobj_images</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.deprecator.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">deprecator</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.deprecated.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.deprecated">
+<span id="deprecated"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">deprecated</span></code><a class="headerlink" href="#module-nibabel.deprecated" title="Permalink to this headline">¶</a></h1>
+<p>Module to help with deprecating objects and classes</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.deprecated.FutureWarningMixin" title="nibabel.deprecated.FutureWarningMixin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FutureWarningMixin</span></code></a>(*args, **kwargs)</p></td>
+<td><p>Insert FutureWarning for object creation</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.deprecated.ModuleProxy" title="nibabel.deprecated.ModuleProxy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ModuleProxy</span></code></a>(module_name)</p></td>
+<td><p>Proxy for module that may not yet have been imported</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.deprecated.VisibleDeprecationWarning" title="nibabel.deprecated.VisibleDeprecationWarning"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VisibleDeprecationWarning</span></code></a></p></td>
+<td><p>Deprecation warning that will be shown by default</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="futurewarningmixin">
+<h2><a class="reference internal" href="#nibabel.deprecated.FutureWarningMixin" title="nibabel.deprecated.FutureWarningMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">FutureWarningMixin</span></code></a><a class="headerlink" href="#futurewarningmixin" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.deprecated.FutureWarningMixin">
+<em class="property">class </em><code class="descclassname">nibabel.deprecated.</code><code class="descname">FutureWarningMixin</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.deprecated.FutureWarningMixin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Insert FutureWarning for object creation</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">C</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span> <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">D</span><span class="p">(</span><span class="n">FutureWarningMixin</span><span class="p">,</span> <span class="n">C</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">warn_message</span> <span class="o">=</span> <span class="s2">&quot;Please, don&#39;t use this class&quot;</span>
+</pre></div>
+</div>
+<p>Record the warning</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">(</span><span class="n">record</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">warns</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="n">d</span> <span class="o">=</span> <span class="n">D</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">warns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">message</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&quot;Please, don&#39;t use this class&quot;</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="nibabel.deprecated.FutureWarningMixin.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.deprecated.FutureWarningMixin.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.deprecated.FutureWarningMixin.warn_message">
+<code class="descname">warn_message</code><em class="property"> = 'This class will be removed in future versions'</em><a class="headerlink" href="#nibabel.deprecated.FutureWarningMixin.warn_message" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="moduleproxy">
+<h2><a class="reference internal" href="#nibabel.deprecated.ModuleProxy" title="nibabel.deprecated.ModuleProxy"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModuleProxy</span></code></a><a class="headerlink" href="#moduleproxy" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.deprecated.ModuleProxy">
+<em class="property">class </em><code class="descclassname">nibabel.deprecated.</code><code class="descname">ModuleProxy</code><span class="sig-paren">(</span><em>module_name</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.deprecated.ModuleProxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Proxy for module that may not yet have been imported</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>module_name</strong><span class="classifier">str</span></dt><dd><p>Full module name e.g. <code class="docutils literal notranslate"><span class="pre">nibabel.minc</span></code></p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<dl class="simple">
+<dt>::</dt><dd><p>arr = np.arange(24).reshape((2, 3, 4))
+minc = ModuleProxy(‘nibabel.minc’)
+minc_image = minc.Minc1Image(arr, np.eye(4))</p>
+</dd>
+</dl>
+<p>So, the <code class="docutils literal notranslate"><span class="pre">minc</span></code> object is a proxy that will import the required module
+when you do attribute access and return the attributes of the imported
+module.</p>
+<dl class="method">
+<dt id="nibabel.deprecated.ModuleProxy.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>module_name</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.deprecated.ModuleProxy.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="visibledeprecationwarning">
+<h2><a class="reference internal" href="#nibabel.deprecated.VisibleDeprecationWarning" title="nibabel.deprecated.VisibleDeprecationWarning"><code class="xref py py-class docutils literal notranslate"><span class="pre">VisibleDeprecationWarning</span></code></a><a class="headerlink" href="#visibledeprecationwarning" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.deprecated.VisibleDeprecationWarning">
+<em class="property">class </em><code class="descclassname">nibabel.deprecated.</code><code class="descname">VisibleDeprecationWarning</code><a class="headerlink" href="#nibabel.deprecated.VisibleDeprecationWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">UserWarning</span></code></p>
+<p>Deprecation warning that will be shown by default</p>
+<p>Python &gt;= 2.7 does not show standard DeprecationWarnings by default:</p>
+<p><a class="reference external" href="http://docs.python.org/dev/whatsnew/2.7.html#the-future-for-python-2-x">http://docs.python.org/dev/whatsnew/2.7.html#the-future-for-python-2-x</a></p>
+<p>Use this class for cases where we do want to show deprecations by default.</p>
+<dl class="method">
+<dt id="nibabel.deprecated.VisibleDeprecationWarning.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.deprecated.VisibleDeprecationWarning.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

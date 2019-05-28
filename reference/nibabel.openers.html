@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="optpkg" href="nibabel.optpkg.html" />
+    <link rel="prev" title="onetime" href="nibabel.onetime.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.optpkg.html" title="optpkg"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.onetime.html" title="onetime"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" accesskey="U">API Documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">openers</span></code></a><ul>
+<li><a class="reference internal" href="#bufferedgzipfile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BufferedGzipFile</span></code></a></li>
+<li><a class="reference internal" href="#imageopener"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageOpener</span></code></a></li>
+<li><a class="reference internal" href="#opener"><code class="xref py py-class docutils literal notranslate"><span class="pre">Opener</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.onetime.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">onetime</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.optpkg.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optpkg</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.openers.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.openers">
+<span id="openers"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">openers</span></code><a class="headerlink" href="#module-nibabel.openers" title="Permalink to this headline">¶</a></h1>
+<p>Context manager openers for various fileobject types</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.openers.BufferedGzipFile" title="nibabel.openers.BufferedGzipFile"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BufferedGzipFile</span></code></a>([filename, mode, …])</p></td>
+<td><p>GzipFile able to readinto buffer &gt;= 2**32 bytes.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.openers.ImageOpener" title="nibabel.openers.ImageOpener"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ImageOpener</span></code></a>(fileish, *args, **kwargs)</p></td>
+<td><p>Opener-type class to collect extra compressed extensions</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.openers.Opener" title="nibabel.openers.Opener"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Opener</span></code></a>(fileish, *args, **kwargs)</p></td>
+<td><p>Class to accept, maybe open, and context-manage file-likes / filenames</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="bufferedgzipfile">
+<h2><a class="reference internal" href="#nibabel.openers.BufferedGzipFile" title="nibabel.openers.BufferedGzipFile"><code class="xref py py-class docutils literal notranslate"><span class="pre">BufferedGzipFile</span></code></a><a class="headerlink" href="#bufferedgzipfile" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.openers.BufferedGzipFile">
+<em class="property">class </em><code class="descclassname">nibabel.openers.</code><code class="descname">BufferedGzipFile</code><span class="sig-paren">(</span><em>filename=None</em>, <em>mode=None</em>, <em>compresslevel=9</em>, <em>fileobj=None</em>, <em>mtime=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.openers.BufferedGzipFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">gzip.GzipFile</span></code></p>
+<p>GzipFile able to readinto buffer &gt;= 2**32 bytes.</p>
+<p>This class only differs from gzip.GzipFile
+in Python 3.5.0.</p>
+<p>This works around a known issue in Python 3.5.
+See <a class="reference external" href="https://bugs.python.org/issue25626">https://bugs.python.org/issue25626</a></p>
+<p>Constructor for the GzipFile class.</p>
+<p>At least one of fileobj and filename must be given a
+non-trivial value.</p>
+<p>The new class instance is based on fileobj, which can be a regular
+file, an io.BytesIO object, or any other object which simulates a file.
+It defaults to None, in which case filename is opened to provide
+a file object.</p>
+<p>When fileobj is not None, the filename argument is only used to be
+included in the gzip file header, which may include the original
+filename of the uncompressed file.  It defaults to the filename of
+fileobj, if discernible; otherwise, it defaults to the empty string,
+and in this case the original filename is not included in the header.</p>
+<p>The mode argument can be any of ‘r’, ‘rb’, ‘a’, ‘ab’, ‘w’, ‘wb’, ‘x’, or
+‘xb’ depending on whether the file will be read or written.  The default
+is the mode of fileobj if discernible; otherwise, the default is ‘rb’.
+A mode of ‘r’ is equivalent to one of ‘rb’, and similarly for ‘w’ and
+‘wb’, ‘a’ and ‘ab’, and ‘x’ and ‘xb’.</p>
+<p>The compresslevel argument is an integer from 0 to 9 controlling the
+level of compression; 1 is fastest and produces the least compression,
+and 9 is slowest and produces the most compression. 0 is no compression
+at all. The default is 9.</p>
+<p>The mtime argument is an optional numeric timestamp to be written
+to the last modification time field in the stream when compressing.
+If omitted or None, the current time is used.</p>
+<dl class="method">
+<dt id="nibabel.openers.BufferedGzipFile.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>filename=None</em>, <em>mode=None</em>, <em>compresslevel=9</em>, <em>fileobj=None</em>, <em>mtime=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.openers.BufferedGzipFile.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor for the GzipFile class.</p>
+<p>At least one of fileobj and filename must be given a
+non-trivial value.</p>
+<p>The new class instance is based on fileobj, which can be a regular
+file, an io.BytesIO object, or any other object which simulates a file.
+It defaults to None, in which case filename is opened to provide
+a file object.</p>
+<p>When fileobj is not None, the filename argument is only used to be
+included in the gzip file header, which may include the original
+filename of the uncompressed file.  It defaults to the filename of
+fileobj, if discernible; otherwise, it defaults to the empty string,
+and in this case the original filename is not included in the header.</p>
+<p>The mode argument can be any of ‘r’, ‘rb’, ‘a’, ‘ab’, ‘w’, ‘wb’, ‘x’, or
+‘xb’ depending on whether the file will be read or written.  The default
+is the mode of fileobj if discernible; otherwise, the default is ‘rb’.
+A mode of ‘r’ is equivalent to one of ‘rb’, and similarly for ‘w’ and
+‘wb’, ‘a’ and ‘ab’, and ‘x’ and ‘xb’.</p>
+<p>The compresslevel argument is an integer from 0 to 9 controlling the
+level of compression; 1 is fastest and produces the least compression,
+and 9 is slowest and produces the most compression. 0 is no compression
+at all. The default is 9.</p>
+<p>The mtime argument is an optional numeric timestamp to be written
+to the last modification time field in the stream when compressing.
+If omitted or None, the current time is used.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="imageopener">
+<h2><a class="reference internal" href="#nibabel.openers.ImageOpener" title="nibabel.openers.ImageOpener"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageOpener</span></code></a><a class="headerlink" href="#imageopener" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.openers.ImageOpener">
+<em class="property">class </em><code class="descclassname">nibabel.openers.</code><code class="descname">ImageOpener</code><span class="sig-paren">(</span><em>fileish</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.openers.ImageOpener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nibabel.openers.Opener" title="nibabel.openers.Opener"><code class="xref py py-class docutils literal notranslate"><span class="pre">nibabel.openers.Opener</span></code></a></p>
+<p>Opener-type class to collect extra compressed extensions</p>
+<p>A trivial sub-class of opener to which image classes can add extra
+extensions with custom openers, such as compressed openers.</p>
+<p>To add an extension, add a line to the class definition (not __init__):</p>
+<blockquote>
+<div><p>ImageOpener.compress_ext_map[ext] = func_def</p>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">ext</span></code> is a file extension beginning with ‘.’ and should be included in
+the image class’s <code class="docutils literal notranslate"><span class="pre">valid_exts</span></code> tuple.</p>
+<p><code class="docutils literal notranslate"><span class="pre">func_def</span></code> is a <cite>(function, (args,))</cite> tuple, where <cite>function accepts a
+filename as the first parameter, and `args</cite> defines the other arguments
+that <cite>function</cite> accepts. These arguments must be any (unordered) subset of
+<cite>mode</cite>, <cite>compresslevel</cite>, and <cite>buffering</cite>.</p>
+<dl class="method">
+<dt id="nibabel.openers.ImageOpener.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>fileish</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.openers.ImageOpener.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.openers.ImageOpener.compress_ext_map">
+<code class="descname">compress_ext_map</code><em class="property"> = {'.gz': (&lt;function _gzip_open&gt;, ('mode', 'compresslevel', 'keep_open')), '.bz2': (&lt;class 'bz2.BZ2File'&gt;, ('mode', 'buffering', 'compresslevel')), None: (&lt;built-in function open&gt;, ('mode', 'buffering')), '.mgz': (&lt;function _gzip_open&gt;, ('mode', 'compresslevel', 'keep_open'))}</em><a class="headerlink" href="#nibabel.openers.ImageOpener.compress_ext_map" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="opener">
+<h2><a class="reference internal" href="#nibabel.openers.Opener" title="nibabel.openers.Opener"><code class="xref py py-class docutils literal notranslate"><span class="pre">Opener</span></code></a><a class="headerlink" href="#opener" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.openers.Opener">
+<em class="property">class </em><code class="descclassname">nibabel.openers.</code><code class="descname">Opener</code><span class="sig-paren">(</span><em>fileish</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.openers.Opener" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to accept, maybe open, and context-manage file-likes / filenames</p>
+<p>Provides context manager to close files that the constructor opened for
+you.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>fileish</strong><span class="classifier">str or file-like</span></dt><dd><p>if str, then open with suitable opening method. If file-like, accept as
+is</p>
+</dd>
+<dt><strong>*args</strong><span class="classifier">positional arguments</span></dt><dd><p>passed to opening method when <cite>fileish</cite> is str.  <code class="docutils literal notranslate"><span class="pre">mode</span></code>, if not
+specified, is <cite>rb</cite>.  <code class="docutils literal notranslate"><span class="pre">compresslevel</span></code>, if relevant, and not specified,
+is set from class variable <code class="docutils literal notranslate"><span class="pre">default_compresslevel</span></code>. <code class="docutils literal notranslate"><span class="pre">keep_open</span></code>, if
+relevant, and not specified, is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+</dd>
+<dt><strong>**kwargs</strong><span class="classifier">keyword arguments</span></dt><dd><p>passed to opening method when <cite>fileish</cite> is str.  Change of defaults as
+for *args</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="nibabel.openers.Opener.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>fileish</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.openers.Opener.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.openers.Opener.bz2_def">
+<code class="descname">bz2_def</code><em class="property"> = (&lt;class 'bz2.BZ2File'&gt;, ('mode', 'buffering', 'compresslevel'))</em><a class="headerlink" href="#nibabel.openers.Opener.bz2_def" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.openers.Opener.close">
+<code class="descname">close</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.openers.Opener.close" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.openers.Opener.close_if_mine">
+<code class="descname">close_if_mine</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.openers.Opener.close_if_mine" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close <code class="docutils literal notranslate"><span class="pre">self.fobj</span></code> iff we opened it in the constructor</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.openers.Opener.closed">
+<code class="descname">closed</code><a class="headerlink" href="#nibabel.openers.Opener.closed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.openers.Opener.compress_ext_icase">
+<code class="descname">compress_ext_icase</code><em class="property"> = True</em><a class="headerlink" href="#nibabel.openers.Opener.compress_ext_icase" title="Permalink to this definition">¶</a></dt>
+<dd><p>whether to ignore case looking for compression extensions</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.openers.Opener.compress_ext_map">
+<code class="descname">compress_ext_map</code><em class="property"> = {'.gz': (&lt;function _gzip_open&gt;, ('mode', 'compresslevel', 'keep_open')), '.bz2': (&lt;class 'bz2.BZ2File'&gt;, ('mode', 'buffering', 'compresslevel')), None: (&lt;built-in function open&gt;, ('mode', 'buffering'))}</em><a class="headerlink" href="#nibabel.openers.Opener.compress_ext_map" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.openers.Opener.default_compresslevel">
+<code class="descname">default_compresslevel</code><em class="property"> = 1</em><a class="headerlink" href="#nibabel.openers.Opener.default_compresslevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>default compression level when writing gz and bz2 files</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.openers.Opener.fileno">
+<code class="descname">fileno</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.openers.Opener.fileno" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.openers.Opener.gz_def">
+<code class="descname">gz_def</code><em class="property"> = (&lt;function _gzip_open&gt;, ('mode', 'compresslevel', 'keep_open'))</em><a class="headerlink" href="#nibabel.openers.Opener.gz_def" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.openers.Opener.mode">
+<code class="descname">mode</code><a class="headerlink" href="#nibabel.openers.Opener.mode" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.openers.Opener.name">
+<code class="descname">name</code><a class="headerlink" href="#nibabel.openers.Opener.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">self.fobj.name</span></code> or self._name if not present</p>
+<p>self._name will be None if object was created with a fileobj, otherwise
+it will be the filename.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.openers.Opener.read">
+<code class="descname">read</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.openers.Opener.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.openers.Opener.readinto">
+<code class="descname">readinto</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.openers.Opener.readinto" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.openers.Opener.seek">
+<code class="descname">seek</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.openers.Opener.seek" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.openers.Opener.tell">
+<code class="descname">tell</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.openers.Opener.tell" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.openers.Opener.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.openers.Opener.write" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

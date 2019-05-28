@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="affines" href="nibabel.affines.html" />
+    <link rel="prev" title="environment" href="nibabel.environment.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.affines.html" title="affines"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.environment.html" title="environment"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" accesskey="U">API Documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">arrayproxy</span></code></a><ul>
+<li><a class="reference internal" href="#id1"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayProxy</span></code></a></li>
+<li><a class="reference internal" href="#is-proxy">is_proxy</a></li>
+<li><a class="reference internal" href="#reshape-dataobj">reshape_dataobj</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.environment.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">environment</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.affines.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">affines</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.arrayproxy.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.arrayproxy">
+<span id="arrayproxy"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">arrayproxy</span></code><a class="headerlink" href="#module-nibabel.arrayproxy" title="Permalink to this headline">¶</a></h1>
+<p>Array proxy base class</p>
+<p>The proxy API is - at minimum:</p>
+<ul class="simple">
+<li><p>The object has a read-only attribute <code class="docutils literal notranslate"><span class="pre">shape</span></code></p></li>
+<li><p>read only <code class="docutils literal notranslate"><span class="pre">is_proxy</span></code> attribute / property set to True</p></li>
+<li><p>the object returns the data array from <code class="docutils literal notranslate"><span class="pre">np.asarray(prox)</span></code></p></li>
+<li><p>returns array slice from <code class="docutils literal notranslate"><span class="pre">prox[&lt;slice_spec&gt;]</span></code> where <code class="docutils literal notranslate"><span class="pre">&lt;slice_spec&gt;</span></code> is any
+ndarray slice specification that does not use numpy ‘advanced indexing’.</p></li>
+<li><p>modifying no object outside <code class="docutils literal notranslate"><span class="pre">obj</span></code> will affect the result of
+<code class="docutils literal notranslate"><span class="pre">np.asarray(obj)</span></code>.  Specifically:</p>
+<ul>
+<li><p>Changes in position (<code class="docutils literal notranslate"><span class="pre">obj.tell()</span></code>) of passed file-like objects will
+not affect the output of from <code class="docutils literal notranslate"><span class="pre">np.asarray(proxy)</span></code>.</p></li>
+<li><p>if you pass a header into the __init__, then modifying the original
+header will not affect the result of the array return.</p></li>
+</ul>
+</li>
+</ul>
+<p>See <code class="xref py py-mod docutils literal notranslate"><span class="pre">nibabel.tests.test_proxy_api</span></code> for proxy API conformance checks.</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.arrayproxy.ArrayProxy" title="nibabel.arrayproxy.ArrayProxy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ArrayProxy</span></code></a>(file_like, spec[, mmap, …])</p></td>
+<td><p>Class to act as proxy for the array that can be read from a file</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.arrayproxy.is_proxy" title="nibabel.arrayproxy.is_proxy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_proxy</span></code></a>(obj)</p></td>
+<td><p>Return True if <cite>obj</cite> is an array proxy</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.arrayproxy.reshape_dataobj" title="nibabel.arrayproxy.reshape_dataobj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reshape_dataobj</span></code></a>(obj, shape)</p></td>
+<td><p>Use <cite>obj</cite> reshape method if possible, else numpy reshape function</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="id1">
+<h2><a class="reference internal" href="#nibabel.arrayproxy.ArrayProxy" title="nibabel.arrayproxy.ArrayProxy"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArrayProxy</span></code></a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.arrayproxy.ArrayProxy">
+<em class="property">class </em><code class="descclassname">nibabel.arrayproxy.</code><code class="descname">ArrayProxy</code><span class="sig-paren">(</span><em>file_like</em>, <em>spec</em>, <em>mmap=True</em>, <em>keep_file_open=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.arrayproxy.ArrayProxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class to act as proxy for the array that can be read from a file</p>
+<p>The array proxy allows us to freeze the passed fileobj and header such that
+it returns the expected data array.</p>
+<p>This implementation assumes a contiguous array in the file object, with one
+of the numpy dtypes, starting at a given file position <code class="docutils literal notranslate"><span class="pre">offset</span></code> with
+single <code class="docutils literal notranslate"><span class="pre">slope</span></code> and <code class="docutils literal notranslate"><span class="pre">intercept</span></code> scaling to produce output values.</p>
+<p>The class <code class="docutils literal notranslate"><span class="pre">__init__</span></code> requires a spec which defines how the data will be
+read and rescaled. The spec may be a tuple of length 2 - 5, containing the
+shape, storage dtype, offset, slope and intercept, or a <code class="docutils literal notranslate"><span class="pre">header</span></code> object
+with methods:</p>
+<ul class="simple">
+<li><p>get_data_shape</p></li>
+<li><p>get_data_dtype</p></li>
+<li><p>get_data_offset</p></li>
+<li><p>get_slope_inter</p></li>
+</ul>
+<p>A header should also have a ‘copy’ method.  This requirement will go away
+when the deprecated ‘header’ propoerty goes away.</p>
+<p>This implementation allows us to deal with Analyze and its variants,
+including Nifti1, and with the MGH format.</p>
+<p>Other image types might need more specific classes to implement the API.
+See <a class="reference internal" href="nibabel.minc1.html#module-nibabel.minc1" title="nibabel.minc1"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nibabel.minc1</span></code></a>, <a class="reference internal" href="nibabel.ecat.html#module-nibabel.ecat" title="nibabel.ecat"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nibabel.ecat</span></code></a> and <a class="reference internal" href="nibabel.parrec.html#module-nibabel.parrec" title="nibabel.parrec"><code class="xref py py-mod docutils literal notranslate"><span class="pre">nibabel.parrec</span></code></a> for
+examples.</p>
+<p>Initialize array proxy instance</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 2.4.1: </span><code class="docutils literal notranslate"><span class="pre">keep_file_open='auto'</span></code> is redundant with <cite>False</cite> and has
+been deprecated. It will raise an error in nibabel 3.0.</p>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>file_like</strong><span class="classifier">object</span></dt><dd><p>File-like object or filename. If file-like object, should implement
+at least <code class="docutils literal notranslate"><span class="pre">read</span></code> and <code class="docutils literal notranslate"><span class="pre">seek</span></code>.</p>
+</dd>
+<dt><strong>spec</strong><span class="classifier">object or tuple</span></dt><dd><p>Tuple must have length 2-5, with the following values:</p>
+<ol class="arabic simple">
+<li><p>shape: tuple - tuple of ints describing shape of data;</p></li>
+<li><p>storage_dtype: dtype specifier - dtype of array inside proxied
+file, or input to <code class="docutils literal notranslate"><span class="pre">numpy.dtype</span></code> to specify array dtype;</p></li>
+<li><p>offset: int - offset, in bytes, of data array from start of file
+(default: 0);</p></li>
+<li><p>slope: float - scaling factor for resulting data (default: 1.0);</p></li>
+<li><p>inter: float - intercept for rescaled data (default: 0.0).</p></li>
+</ol>
+<p>OR</p>
+<p>Header object implementing <code class="docutils literal notranslate"><span class="pre">get_data_shape</span></code>, <code class="docutils literal notranslate"><span class="pre">get_data_dtype</span></code>,
+<code class="docutils literal notranslate"><span class="pre">get_data_offset</span></code>, <code class="docutils literal notranslate"><span class="pre">get_slope_inter</span></code></p>
+</dd>
+<dt><strong>mmap</strong><span class="classifier">{True, False, ‘c’, ‘r’}, optional, keyword only</span></dt><dd><p><cite>mmap</cite> controls the use of numpy memory mapping for reading data.
+If False, do not try numpy <code class="docutils literal notranslate"><span class="pre">memmap</span></code> for data array.  If one of
+{‘c’, ‘r’}, try numpy memmap with <code class="docutils literal notranslate"><span class="pre">mode=mmap</span></code>.  A <cite>mmap</cite> value of
+True gives the same behavior as <code class="docutils literal notranslate"><span class="pre">mmap='c'</span></code>.  If <cite>file_like</cite>
+cannot be memory-mapped, ignore <cite>mmap</cite> value and read array from
+file.</p>
+</dd>
+<dt><strong>keep_file_open</strong><span class="classifier">{ None, True, False }, optional, keyword only</span></dt><dd><p><cite>keep_file_open</cite> controls whether a new file handle is created
+every time the image is accessed, or a single file handle is
+created and used for the lifetime of this <code class="docutils literal notranslate"><span class="pre">ArrayProxy</span></code>. If
+<code class="docutils literal notranslate"><span class="pre">True</span></code>, a single file handle is created and used. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
+a new file handle is created every time the image is accessed.
+If <code class="docutils literal notranslate"><span class="pre">file_like</span></code> is an open file handle, this setting has no
+effect. The default value (<code class="docutils literal notranslate"><span class="pre">None</span></code>) will result in the value of
+<code class="docutils literal notranslate"><span class="pre">KEEP_FILE_OPEN_DEFAULT</span></code> being used.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="nibabel.arrayproxy.ArrayProxy.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>file_like</em>, <em>spec</em>, <em>mmap=True</em>, <em>keep_file_open=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.arrayproxy.ArrayProxy.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize array proxy instance</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 2.4.1: </span><code class="docutils literal notranslate"><span class="pre">keep_file_open='auto'</span></code> is redundant with <cite>False</cite> and has
+been deprecated. It will raise an error in nibabel 3.0.</p>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>file_like</strong><span class="classifier">object</span></dt><dd><p>File-like object or filename. If file-like object, should implement
+at least <code class="docutils literal notranslate"><span class="pre">read</span></code> and <code class="docutils literal notranslate"><span class="pre">seek</span></code>.</p>
+</dd>
+<dt><strong>spec</strong><span class="classifier">object or tuple</span></dt><dd><p>Tuple must have length 2-5, with the following values:</p>
+<ol class="arabic simple">
+<li><p>shape: tuple - tuple of ints describing shape of data;</p></li>
+<li><p>storage_dtype: dtype specifier - dtype of array inside proxied
+file, or input to <code class="docutils literal notranslate"><span class="pre">numpy.dtype</span></code> to specify array dtype;</p></li>
+<li><p>offset: int - offset, in bytes, of data array from start of file
+(default: 0);</p></li>
+<li><p>slope: float - scaling factor for resulting data (default: 1.0);</p></li>
+<li><p>inter: float - intercept for rescaled data (default: 0.0).</p></li>
+</ol>
+<p>OR</p>
+<p>Header object implementing <code class="docutils literal notranslate"><span class="pre">get_data_shape</span></code>, <code class="docutils literal notranslate"><span class="pre">get_data_dtype</span></code>,
+<code class="docutils literal notranslate"><span class="pre">get_data_offset</span></code>, <code class="docutils literal notranslate"><span class="pre">get_slope_inter</span></code></p>
+</dd>
+<dt><strong>mmap</strong><span class="classifier">{True, False, ‘c’, ‘r’}, optional, keyword only</span></dt><dd><p><cite>mmap</cite> controls the use of numpy memory mapping for reading data.
+If False, do not try numpy <code class="docutils literal notranslate"><span class="pre">memmap</span></code> for data array.  If one of
+{‘c’, ‘r’}, try numpy memmap with <code class="docutils literal notranslate"><span class="pre">mode=mmap</span></code>.  A <cite>mmap</cite> value of
+True gives the same behavior as <code class="docutils literal notranslate"><span class="pre">mmap='c'</span></code>.  If <cite>file_like</cite>
+cannot be memory-mapped, ignore <cite>mmap</cite> value and read array from
+file.</p>
+</dd>
+<dt><strong>keep_file_open</strong><span class="classifier">{ None, True, False }, optional, keyword only</span></dt><dd><p><cite>keep_file_open</cite> controls whether a new file handle is created
+every time the image is accessed, or a single file handle is
+created and used for the lifetime of this <code class="docutils literal notranslate"><span class="pre">ArrayProxy</span></code>. If
+<code class="docutils literal notranslate"><span class="pre">True</span></code>, a single file handle is created and used. If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
+a new file handle is created every time the image is accessed.
+If <code class="docutils literal notranslate"><span class="pre">file_like</span></code> is an open file handle, this setting has no
+effect. The default value (<code class="docutils literal notranslate"><span class="pre">None</span></code>) will result in the value of
+<code class="docutils literal notranslate"><span class="pre">KEEP_FILE_OPEN_DEFAULT</span></code> being used.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.arrayproxy.ArrayProxy.dtype">
+<code class="descname">dtype</code><a class="headerlink" href="#nibabel.arrayproxy.ArrayProxy.dtype" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.arrayproxy.ArrayProxy.get_unscaled">
+<code class="descname">get_unscaled</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.arrayproxy.ArrayProxy.get_unscaled" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read of data from file</p>
+<p>This is an optional part of the proxy API</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.arrayproxy.ArrayProxy.header">
+<code class="descname">header</code><a class="headerlink" href="#nibabel.arrayproxy.ArrayProxy.header" title="Permalink to this definition">¶</a></dt>
+<dd><p>ArrayProxy.header deprecated</p>
+<ul class="simple">
+<li><p>deprecated from version: 2.2</p></li>
+<li><p>Will raise &lt;class ‘nibabel.deprecator.ExpiredDeprecationError’&gt; as of version: 3.0</p></li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.arrayproxy.ArrayProxy.inter">
+<code class="descname">inter</code><a class="headerlink" href="#nibabel.arrayproxy.ArrayProxy.inter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.arrayproxy.ArrayProxy.is_proxy">
+<code class="descname">is_proxy</code><a class="headerlink" href="#nibabel.arrayproxy.ArrayProxy.is_proxy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.arrayproxy.ArrayProxy.ndim">
+<code class="descname">ndim</code><a class="headerlink" href="#nibabel.arrayproxy.ArrayProxy.ndim" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.arrayproxy.ArrayProxy.offset">
+<code class="descname">offset</code><a class="headerlink" href="#nibabel.arrayproxy.ArrayProxy.offset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.arrayproxy.ArrayProxy.order">
+<code class="descname">order</code><em class="property"> = 'F'</em><a class="headerlink" href="#nibabel.arrayproxy.ArrayProxy.order" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="nibabel.arrayproxy.ArrayProxy.reshape">
+<code class="descname">reshape</code><span class="sig-paren">(</span><em>shape</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.arrayproxy.ArrayProxy.reshape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an ArrayProxy with a new shape, without modifying data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.arrayproxy.ArrayProxy.shape">
+<code class="descname">shape</code><a class="headerlink" href="#nibabel.arrayproxy.ArrayProxy.shape" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.arrayproxy.ArrayProxy.slope">
+<code class="descname">slope</code><a class="headerlink" href="#nibabel.arrayproxy.ArrayProxy.slope" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="is-proxy">
+<h2>is_proxy<a class="headerlink" href="#is-proxy" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.arrayproxy.is_proxy">
+<code class="descclassname">nibabel.arrayproxy.</code><code class="descname">is_proxy</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.arrayproxy.is_proxy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if <cite>obj</cite> is an array proxy</p>
+</dd></dl>
+
+</div>
+<div class="section" id="reshape-dataobj">
+<h2>reshape_dataobj<a class="headerlink" href="#reshape-dataobj" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.arrayproxy.reshape_dataobj">
+<code class="descclassname">nibabel.arrayproxy.</code><code class="descname">reshape_dataobj</code><span class="sig-paren">(</span><em>obj</em>, <em>shape</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.arrayproxy.reshape_dataobj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use <cite>obj</cite> reshape method if possible, else numpy reshape function</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

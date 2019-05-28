@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="imageglobals" href="nibabel.imageglobals.html" />
+    <link rel="prev" title="funcs" href="nibabel.funcs.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.imageglobals.html" title="imageglobals"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.funcs.html" title="funcs"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" accesskey="U">API Documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imageclasses</span></code></a><ul>
+<li><a class="reference internal" href="#classmapdict"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassMapDict</span></code></a></li>
+<li><a class="reference internal" href="#extmaprecoder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExtMapRecoder</span></code></a></li>
+<li><a class="reference internal" href="#spatial-axes-first">spatial_axes_first</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.funcs.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">funcs</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.imageglobals.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imageglobals</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.imageclasses.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.imageclasses">
+<span id="imageclasses"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">imageclasses</span></code><a class="headerlink" href="#module-nibabel.imageclasses" title="Permalink to this headline">¶</a></h1>
+<p>Define supported image classes and names</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.imageclasses.ClassMapDict" title="nibabel.imageclasses.ClassMapDict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ClassMapDict</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.imageclasses.ExtMapRecoder" title="nibabel.imageclasses.ExtMapRecoder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExtMapRecoder</span></code></a>(codes[, fields, map_maker])</p></td>
+<td><p>Create recoder object</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.imageclasses.spatial_axes_first" title="nibabel.imageclasses.spatial_axes_first"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spatial_axes_first</span></code></a>(img)</p></td>
+<td><p>True if spatial image axes for <cite>img</cite> always preceed other axes</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="classmapdict">
+<h2><a class="reference internal" href="#nibabel.imageclasses.ClassMapDict" title="nibabel.imageclasses.ClassMapDict"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClassMapDict</span></code></a><a class="headerlink" href="#classmapdict" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.imageclasses.ClassMapDict">
+<em class="property">class </em><code class="descclassname">nibabel.imageclasses.</code><code class="descname">ClassMapDict</code><span class="sig-paren">(</span><em>) -&gt; new empty dictionary dict(mapping) -&gt; new dictionary initialized from a mapping object's (key</em>, <em>value) pairs dict(iterable) -&gt; new dictionary initialized as if via: d = {} for k</em>, <em>v in iterable: d[k] = v dict(**kwargs) -&gt; new dictionary initialized with the name=value pairs in the keyword argument list.  For example:  dict(one=1</em>, <em>two=2</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.imageclasses.ClassMapDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></p>
+<dl class="method">
+<dt id="nibabel.imageclasses.ClassMapDict.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.imageclasses.ClassMapDict.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="extmaprecoder">
+<h2><a class="reference internal" href="#nibabel.imageclasses.ExtMapRecoder" title="nibabel.imageclasses.ExtMapRecoder"><code class="xref py py-class docutils literal notranslate"><span class="pre">ExtMapRecoder</span></code></a><a class="headerlink" href="#extmaprecoder" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.imageclasses.ExtMapRecoder">
+<em class="property">class </em><code class="descclassname">nibabel.imageclasses.</code><code class="descname">ExtMapRecoder</code><span class="sig-paren">(</span><em>codes</em>, <em>fields=('code'</em>, <em>)</em>, <em>map_maker=&lt;class 'collections.OrderedDict'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.imageclasses.ExtMapRecoder" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="nibabel.volumeutils.html#nibabel.volumeutils.Recoder" title="nibabel.volumeutils.Recoder"><code class="xref py py-class docutils literal notranslate"><span class="pre">nibabel.volumeutils.Recoder</span></code></a></p>
+<p>Create recoder object</p>
+<p><code class="docutils literal notranslate"><span class="pre">codes</span></code> give a sequence of code, alias sequences
+<code class="docutils literal notranslate"><span class="pre">fields</span></code> are names by which the entries in these sequences can be
+accessed.</p>
+<p>By default <code class="docutils literal notranslate"><span class="pre">fields</span></code> gives the first column the name
+“code”.  The first column is the vector of first entries
+in each of the sequences found in <code class="docutils literal notranslate"><span class="pre">codes</span></code>.  Thence you can
+get the equivalent first column value with ob.code[value],
+where value can be a first column value, or a value in any of
+the other columns in that sequence.</p>
+<p>You can give other columns names too, and access them in the
+same way - see the examples in the class docstring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>codes</strong><span class="classifier">sequence of sequences</span></dt><dd><p>Each sequence defines values (codes) that are equivalent</p>
+</dd>
+<dt><strong>fields</strong><span class="classifier">{(‘code’,) string sequence}, optional</span></dt><dd><p>names by which elements in sequences can be accessed</p>
+</dd>
+<dt><strong>map_maker: callable, optional</strong></dt><dd><p>constructor for dict-like objects used to store key value pairs.
+Default is <code class="docutils literal notranslate"><span class="pre">dict</span></code>.  <code class="docutils literal notranslate"><span class="pre">map_maker()</span></code> generates an empty mapping.
+The mapping need only implement <code class="docutils literal notranslate"><span class="pre">__getitem__,</span> <span class="pre">__setitem__,</span> <span class="pre">keys,</span>
+<span class="pre">values</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="nibabel.imageclasses.ExtMapRecoder.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>codes</em>, <em>fields=('code'</em>, <em>)</em>, <em>map_maker=&lt;class 'collections.OrderedDict'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.imageclasses.ExtMapRecoder.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create recoder object</p>
+<p><code class="docutils literal notranslate"><span class="pre">codes</span></code> give a sequence of code, alias sequences
+<code class="docutils literal notranslate"><span class="pre">fields</span></code> are names by which the entries in these sequences can be
+accessed.</p>
+<p>By default <code class="docutils literal notranslate"><span class="pre">fields</span></code> gives the first column the name
+“code”.  The first column is the vector of first entries
+in each of the sequences found in <code class="docutils literal notranslate"><span class="pre">codes</span></code>.  Thence you can
+get the equivalent first column value with ob.code[value],
+where value can be a first column value, or a value in any of
+the other columns in that sequence.</p>
+<p>You can give other columns names too, and access them in the
+same way - see the examples in the class docstring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>codes</strong><span class="classifier">sequence of sequences</span></dt><dd><p>Each sequence defines values (codes) that are equivalent</p>
+</dd>
+<dt><strong>fields</strong><span class="classifier">{(‘code’,) string sequence}, optional</span></dt><dd><p>names by which elements in sequences can be accessed</p>
+</dd>
+<dt><strong>map_maker: callable, optional</strong></dt><dd><p>constructor for dict-like objects used to store key value pairs.
+Default is <code class="docutils literal notranslate"><span class="pre">dict</span></code>.  <code class="docutils literal notranslate"><span class="pre">map_maker()</span></code> generates an empty mapping.
+The mapping need only implement <code class="docutils literal notranslate"><span class="pre">__getitem__,</span> <span class="pre">__setitem__,</span> <span class="pre">keys,</span>
+<span class="pre">values</span></code>.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="spatial-axes-first">
+<h2>spatial_axes_first<a class="headerlink" href="#spatial-axes-first" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.imageclasses.spatial_axes_first">
+<code class="descclassname">nibabel.imageclasses.</code><code class="descname">spatial_axes_first</code><span class="sig-paren">(</span><em>img</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.imageclasses.spatial_axes_first" title="Permalink to this definition">¶</a></dt>
+<dd><p>True if spatial image axes for <cite>img</cite> always preceed other axes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>img</strong><span class="classifier">object</span></dt><dd><p>Image object implementing at least <code class="docutils literal notranslate"><span class="pre">shape</span></code> attribute.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>spatial_axes_first</strong><span class="classifier">bool</span></dt><dd><p>True if image only has spatial axes (number of axes &lt; 4) or image type
+known to have spatial axes preceeding other axes.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="NiBabel Developer Guidelines" href="devguide.html" />
+    <link rel="prev" title="Introduction to DICOM" href="../dicom/dicom_intro.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="devguide.html" title="NiBabel Developer Guidelines"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../dicom/dicom_intro.html" title="Introduction to DICOM"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+ 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../dicom/dicom_intro.html"
+                        title="previous chapter">Introduction to DICOM</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="devguide.html"
+                        title="next chapter">NiBabel Developer Guidelines</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/devel/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="developer-documentation-page">
+<span id="devindex"></span><h1>Developer documentation page<a class="headerlink" href="#developer-documentation-page" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="devguide.html">NiBabel Developer Guidelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="devguide.html#nibabel-source-code">NiBabel source code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devguide.html#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devguide.html#git-repository">Git Repository</a></li>
+<li class="toctree-l2"><a class="reference internal" href="devguide.html#changelog">Changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="add_test_data.html">Adding test data</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="add_test_data.html#small-files">Small files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_test_data.html#files-with-open-licenses">Files with open licenses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_test_data.html#adding-the-file-to-nibabel-tests-data">Adding the file to <code class="docutils literal notranslate"><span class="pre">nibabel/tests/data</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_test_data.html#adding-as-a-submodule-to-nibabel-data">Adding as a submodule to <code class="docutils literal notranslate"><span class="pre">nibabel-data</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="add_image_format.html">How to add a new image format to nibabel</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="add_image_format.html#philosophy">Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_image_format.html#helping-us-to-review-your-code">Helping us to review your code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_image_format.html#the-format-can-be-read-only">The format can be read-only</a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_image_format.html#the-image-api">The image API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_image_format.html#where-to-start-with-the-code">Where to start with the code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="add_image_format.html#a-recipe-for-writing-a-new-image-format">A recipe for writing a new image format</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="devdiscuss.html">Developer discussions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spm_use.html">Image use-cases in SPM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="modified_images.html">Keeping track of whether images have been modified since load</a></li>
+<li class="toctree-l2"><a class="reference internal" href="data_pkg_design.html">Design of data packages for the nibabel and the nipy suite</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="make_release.html">A guide to making a nibabel release</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="make_release.html#release-checklist">Release checklist</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_testing.html">Advanced Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="advanced_testing.html#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="advanced_testing.html#long-running-tests">Long-running tests</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

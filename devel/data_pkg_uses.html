@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+ 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Data package usecases and implementation</a><ul>
+<li><a class="reference internal" href="#usecases">Usecases</a><ul>
+<li><a class="reference internal" href="#prundles">Prundles</a></li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#create-local-path-prundle">Create local-path prundle</a></li>
+<li><a class="reference internal" href="#getting-prundle-data">Getting prundle data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#discovery">Discovery</a><ul>
+<li><a class="reference internal" href="#discovery-sources">Discovery sources</a></li>
+<li><a class="reference internal" href="#default-discovery-sources">Default discovery sources</a></li>
+<li><a class="reference internal" href="#discovery-source-pools">Discovery source pools</a></li>
+<li><a class="reference internal" href="#register-a-prundle">Register a prundle</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#implementation">Implementation</a><ul>
+<li><a class="reference internal" href="#local-path-prundles">Local path prundles</a></li>
+<li><a class="reference internal" href="#id1">Discovery sources</a></li>
+<li><a class="reference internal" href="#registering-a-package">Registering a package</a></li>
+<li><a class="reference internal" href="#using-discovery-sources-without-dpkg">Using discovery sources without dpkg</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/devel/data_pkg_uses.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="data-package-usecases-and-implementation">
+<span id="data-pkg-uses"></span><h1>Data package usecases and implementation<a class="headerlink" href="#data-package-usecases-and-implementation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="usecases">
+<h2>Usecases<a class="headerlink" href="#usecases" title="Permalink to this headline">¶</a></h2>
+<p>We are here working from <a class="reference internal" href="data_pkg_discuss.html"><span class="doc">Principles of data package</span></a></p>
+<div class="section" id="prundles">
+<h3>Prundles<a class="headerlink" href="#prundles" title="Permalink to this headline">¶</a></h3>
+<p>See <a class="reference internal" href="data_pkg_discuss.html#prundle"><span class="std std-ref">Package provider bundle</span></a>.</p>
+<p>An <em>local path</em> format prundle is a directory on the local file system with prundle data stored in files in a
+on the local filesystem.</p>
+</div>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<p>We’ll call our package <cite>dang</cite> - data package new generation.</p>
+<div class="section" id="create-local-path-prundle">
+<h4>Create local-path prundle<a class="headerlink" href="#create-local-path-prundle" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pth</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span> <span class="c1"># temporary directory</span>
+</pre></div>
+</div>
+<p>Make a pinstance object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dang</span> <span class="k">import</span> <span class="n">Pinstance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pri</span> <span class="o">=</span> <span class="n">Prundle</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;my-package&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pri</span><span class="o">.</span><span class="n">pkg_name</span>
+<span class="go">&#39;my-package&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pri</span><span class="o">.</span><span class="n">meta</span>
+<span class="go">{}</span>
+</pre></div>
+</div>
+<p>Now we make a prundle.   First a directory to contain it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pth</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span> <span class="c1"># temporary directory</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dang.prundle</span> <span class="k">import</span> <span class="n">LocalPathPrundle</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prun</span> <span class="o">=</span> <span class="n">LocalPathPrundle</span><span class="p">(</span><span class="n">pri</span><span class="p">,</span> <span class="n">pth</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>At the moment there’s nothing in the directory.  The ‘write’ method will write
+the meta information - here just the package name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">prun</span><span class="o">.</span><span class="n">write</span><span class="p">()</span> <span class="c1"># writes meta.ini file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">pth</span><span class="p">)</span>
+<span class="go">[&#39;meta.ini&#39;]</span>
+</pre></div>
+</div>
+<p>The local path prundle data is just the set of files in the temporary directory
+named in <code class="docutils literal notranslate"><span class="pre">pth</span></code> above.</p>
+<p>Now we’ve written the package, we can get it by a single call that reads in the
+<code class="docutils literal notranslate"><span class="pre">meta.ini</span></code> file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">prun_back</span> <span class="o">=</span> <span class="n">LocalPathPrundle</span><span class="o">.</span><span class="n">from_path</span><span class="p">(</span><span class="n">pth</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prun_back</span><span class="o">.</span><span class="n">pkg_name</span>
+<span class="go">&#39;my-package&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-prundle-data">
+<h4>Getting prundle data<a class="headerlink" href="#getting-prundle-data" title="Permalink to this headline">¶</a></h4>
+<p>The file-system prundle formats can return content by file names.</p>
+<p>For example, for the local path <code class="docutils literal notranslate"><span class="pre">prun</span></code> distribution objects we have seen so
+far, the following should work:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fobj</span> <span class="o">=</span> <span class="n">prun</span><span class="o">.</span><span class="n">get_fileobj</span><span class="p">(</span><span class="s1">&#39;a_file.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In fact, local path distribution objects also have a <code class="docutils literal notranslate"><span class="pre">path</span></code> attribute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">prun</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;a_file.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">path</span></code> attribute might not make sense for objects with greater
+abstraction over the file-system - for example objects encapsulating web
+content.</p>
+</div>
+</div>
+</div>
+<div class="section" id="discovery">
+<h2>Discovery<a class="headerlink" href="#discovery" title="Permalink to this headline">¶</a></h2>
+<p>So far, in order to create a prundle object, we have to know where the prundle
+is (the path).</p>
+<p>We want to be able to tell the system where prundles are - and the system will
+then be able to return a prundle on request - perhaps by package name.  The
+system here is answering a <a class="reference internal" href="data_pkg_discuss.html#prundle-discovery"><span class="std std-ref">Prundle discovery</span></a> query.</p>
+<p>We will then want to ask our packaging system whether it knows about the
+prundle we are interested in.</p>
+<div class="section" id="discovery-sources">
+<h3>Discovery sources<a class="headerlink" href="#discovery-sources" title="Permalink to this headline">¶</a></h3>
+<p>A discovery source is an object that can answer a discovery query.
+Specifically, it is an object with a <code class="docutils literal notranslate"><span class="pre">discover</span></code> method, like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dang</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dsrc</span> <span class="o">=</span> <span class="n">dang</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="s1">&#39;local-system&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dquery_result</span> <span class="o">=</span> <span class="n">dsrc</span><span class="o">.</span><span class="n">discover</span><span class="p">(</span><span class="s1">&#39;my-package&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dquery_result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pkg_name</span>
+<span class="go">&#39;my-package&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dquery_result</span> <span class="o">=</span> <span class="n">dsrc</span><span class="o">.</span><span class="n">discover</span><span class="p">(</span><span class="s1">&#39;implausible-pkg&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">dquery_result</span><span class="p">)</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p>The discovery version number spec may allow comparison operators, as for
+<code class="docutils literal notranslate"><span class="pre">distutils.version.LooseVersion</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">res</span> <span class="o">=</span> <span class="n">dsrc</span><span class="o">.</span><span class="n">discover</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;my-package&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;&gt;=0&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prun</span> <span class="o">=</span> <span class="n">rst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prun</span><span class="o">.</span><span class="n">pkg_name</span>
+<span class="go">&#39;my-package&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prun</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">]</span>
+<span class="go">&#39;0&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="default-discovery-sources">
+<h3>Default discovery sources<a class="headerlink" href="#default-discovery-sources" title="Permalink to this headline">¶</a></h3>
+<p>We’ve used the <code class="docutils literal notranslate"><span class="pre">local-system</span></code> discovery source in this call:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dsrc</span> <span class="o">=</span> <span class="n">dpkg</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="s1">&#39;local-system&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">get_source</span></code> function is a convenience function that returns default
+discovery sources by name.  There are at least two named discovery sources,
+<code class="docutils literal notranslate"><span class="pre">local-system</span></code>, and <code class="docutils literal notranslate"><span class="pre">local-user</span></code>.  <code class="docutils literal notranslate"><span class="pre">local-system</span></code> is a discovery source
+for packages that are installed system-wide (<code class="docutils literal notranslate"><span class="pre">/usr/share/data</span></code> type
+installation in *nix).  <code class="docutils literal notranslate"><span class="pre">local-user</span></code> is for packages installed for this user
+only (<code class="docutils literal notranslate"><span class="pre">/home/user/data</span></code> type installations in *nix).</p>
+</div>
+<div class="section" id="discovery-source-pools">
+<h3>Discovery source pools<a class="headerlink" href="#discovery-source-pools" title="Permalink to this headline">¶</a></h3>
+<p>We’ll typically have more than one source from which we’d like to query.  The
+obvious case is where we want to look for both system and local sources.  For
+this we have a <em>source pool</em> which simply returns the first known distribution
+from a list of sources.  Something like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">local_sys</span> <span class="o">=</span> <span class="n">dpkg</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="s1">&#39;local-system&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">local_usr</span> <span class="o">=</span> <span class="n">dpkg</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="s1">&#39;local-user&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">src_pool</span> <span class="o">=</span> <span class="n">dpkg</span><span class="o">.</span><span class="n">SourcePool</span><span class="p">((</span><span class="n">local_usr</span><span class="p">,</span> <span class="n">local_sys</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dq_res</span> <span class="o">=</span> <span class="n">src_pool</span><span class="o">.</span><span class="n">discover</span><span class="p">(</span><span class="s1">&#39;my-package&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dq_res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pkg_name</span>
+<span class="go">&#39;my-package&#39;</span>
+</pre></div>
+</div>
+<p>We’ll often want to do exactly this, so we’ll add this source pool to those
+that can be returned from our <code class="docutils literal notranslate"><span class="pre">get_source</span></code> convenience function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">src_pool</span> <span class="o">=</span> <span class="n">dpkg</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="s1">&#39;local-pool&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="register-a-prundle">
+<h3>Register a prundle<a class="headerlink" href="#register-a-prundle" title="Permalink to this headline">¶</a></h3>
+<p>In order to register a prundle, we need a prundle object and a
+discovery source:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">dang.prundle</span> <span class="k">import</span> <span class="n">LocalPathPrundle</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prun</span> <span class="o">=</span> <span class="n">LocalPathDistribution</span><span class="o">.</span><span class="n">from_path</span><span class="p">(</span><span class="n">path</span><span class="o">=/</span><span class="n">a</span><span class="o">/</span><span class="n">path</span><span class="s1">&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">local_usr</span> <span class="o">=</span> <span class="n">dang</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="s1">&#39;local-user&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">local_usr</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">prun</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Let us then write the source to disk:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">local_usr</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now, when we start another process as the same user, we can do this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">dang</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">local_usr</span> <span class="o">=</span> <span class="n">dang</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="s1">&#39;local-user&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prun</span> <span class="o">=</span> <span class="n">local_usr</span><span class="o">.</span><span class="n">discover</span><span class="p">(</span><span class="s1">&#39;my-package&#39;</span><span class="p">,</span> <span class="s1">&#39;0&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>Here are some notes.  We had the hope that we could implement something that
+would be simple enough that someone using the system would not need our code,
+but could work from the specification.</p>
+<div class="section" id="local-path-prundles">
+<h3>Local path prundles<a class="headerlink" href="#local-path-prundles" title="Permalink to this headline">¶</a></h3>
+<p>These are directories accessible on the local filesystem.  The directory needs
+to give information about the prundle name and optionally, version, tag,
+revision id and maybe other metadata.  An <code class="docutils literal notranslate"><span class="pre">ini</span></code> file is probably enough for
+this - something like a <code class="docutils literal notranslate"><span class="pre">meta.ini</span></code> file in the directory with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span>
+<span class="n">name</span> <span class="o">=</span> <span class="n">my</span><span class="o">-</span><span class="n">package</span>
+<span class="n">version</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>might be enough to get started.</p>
+</div>
+<div class="section" id="id1">
+<h3>Discovery sources<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The discovery source has to be able to return prundle objects for the
+prundles it knows about:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">my</span><span class="o">-</span><span class="n">package</span><span class="p">]</span>
+<span class="mi">0</span> <span class="o">=</span> <span class="o">/</span><span class="n">some</span><span class="o">/</span><span class="n">path</span>
+<span class="mf">0.1</span> <span class="o">=</span> <span class="o">/</span><span class="n">another</span><span class="o">/</span><span class="n">path</span>
+<span class="p">[</span><span class="n">another</span><span class="o">-</span><span class="n">package</span><span class="p">]</span>
+<span class="mi">0</span> <span class="o">=</span> <span class="o">/</span><span class="n">further</span><span class="o">/</span><span class="n">path</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="registering-a-package">
+<h3>Registering a package<a class="headerlink" href="#registering-a-package" title="Permalink to this headline">¶</a></h3>
+<p>So far we have a local path distribution, that is a directory with some files
+in it, and our own <code class="docutils literal notranslate"><span class="pre">meta.ini</span></code> file, containing the package name and version.
+How does this package register itself to the default sources?  Of course, we
+could use <code class="docutils literal notranslate"><span class="pre">dpkg</span></code> as above:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dst</span> <span class="o">=</span> <span class="n">dpkg</span><span class="o">.</span><span class="n">LocalPathDistribution</span><span class="o">.</span><span class="n">from_path</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;/a/path&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">local_usr</span> <span class="o">=</span> <span class="n">dpkg</span><span class="o">.</span><span class="n">get_source</span><span class="p">(</span><span class="s1">&#39;local-user&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">local_usr</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">local_usr</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>but we wanted to be able to avoid using <code class="docutils literal notranslate"><span class="pre">dpkg</span></code>.  To do this, there might be
+a supporting script, in the distribution directory, called <code class="docutils literal notranslate"><span class="pre">register_me.py</span></code>,
+of form given in <a class="reference download internal" download="" href="../_downloads/902017fe603fa2995534456a924b90f0/register_me.py"><code class="xref download docutils literal notranslate"><span class="pre">register_me.py</span></code></a>.</p>
+</div>
+<div class="section" id="using-discovery-sources-without-dpkg">
+<h3>Using discovery sources without dpkg<a class="headerlink" href="#using-discovery-sources-without-dpkg" title="Permalink to this headline">¶</a></h3>
+<p>The local discovery sources are ini files, so it would be easy to read and use
+these outside the dpkg system, as long as the locations of the ini files are
+well defined.  Here is the code from <code class="docutils literal notranslate"><span class="pre">register_me.py</span></code> defining these files:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s1">&#39;win32&#39;</span><span class="p">:</span>
+    <span class="n">_home_dpkg_sdir</span> <span class="o">=</span> <span class="s1">&#39;_dpkg&#39;</span>
+    <span class="n">_sys_drive</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitdrive</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">_home_dpkg_sdir</span> <span class="o">=</span> <span class="s1">&#39;.dpkg&#39;</span>
+    <span class="n">_sys_drive</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span>
+<span class="c1"># Can we get the user directory?</span>
+<span class="n">_home</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s1">&#39;~&#39;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">_home</span> <span class="o">==</span> <span class="s1">&#39;~&#39;</span><span class="p">:</span> <span class="c1"># if not, the user ini file is undefined</span>
+    <span class="n">HOME_INI</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">HOME_INI</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_home</span><span class="p">,</span> <span class="n">_home_dpkg_sdir</span><span class="p">,</span> <span class="s1">&#39;local.dsource&#39;</span><span class="p">)</span>
+<span class="n">SYS_INI</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_sys_drive</span><span class="p">,</span> <span class="s1">&#39;etc&#39;</span><span class="p">,</span> <span class="s1">&#39;dpkg&#39;</span><span class="p">,</span> <span class="s1">&#39;local.dsource&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

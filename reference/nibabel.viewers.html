@@ -1,0 +1,294 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="xmlutils" href="nibabel.xmlutils.html" />
+    <link rel="prev" title="spaces" href="nibabel.spaces.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.xmlutils.html" title="xmlutils"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.spaces.html" title="spaces"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" >API Documentation</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="index.html" accesskey="U">API Reference</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">viewers</span></code></a><ul>
+<li><a class="reference internal" href="#orthoslicer3d"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrthoSlicer3D</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.spaces.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">spaces</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.xmlutils.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlutils</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.viewers.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.viewers">
+<span id="viewers"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">viewers</span></code><a class="headerlink" href="#module-nibabel.viewers" title="Permalink to this headline">¶</a></h1>
+<p>Utilities for viewing images</p>
+<p>Includes version of OrthoSlicer3D code originally written by our own
+Paul Ivanov.</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.viewers.OrthoSlicer3D" title="nibabel.viewers.OrthoSlicer3D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">OrthoSlicer3D</span></code></a>(data[, affine, axes, title])</p></td>
+<td><p>Orthogonal-plane slice viewer.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="orthoslicer3d">
+<h2><a class="reference internal" href="#nibabel.viewers.OrthoSlicer3D" title="nibabel.viewers.OrthoSlicer3D"><code class="xref py py-class docutils literal notranslate"><span class="pre">OrthoSlicer3D</span></code></a><a class="headerlink" href="#orthoslicer3d" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.viewers.OrthoSlicer3D">
+<em class="property">class </em><code class="descclassname">nibabel.viewers.</code><code class="descname">OrthoSlicer3D</code><span class="sig-paren">(</span><em>data</em>, <em>affine=None</em>, <em>axes=None</em>, <em>title=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.viewers.OrthoSlicer3D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Orthogonal-plane slice viewer.</p>
+<p>OrthoSlicer3d expects 3- or 4-dimensional array data.  It treats
+4D data as a sequence of 3D spatial volumes, where a slice over the final
+array axis gives a single 3D spatial volume.</p>
+<p>For 3D data, the default behavior is to create a figure with 3 axes, one
+for each slice orientation of the spatial volume.</p>
+<p>Clicking and dragging the mouse in any one axis will select out the
+corresponding slices in the other two. Scrolling up and
+down moves the slice up and down in the current axis.</p>
+<p>For 4D data, the fourth figure axis can be used to control which
+3D volume is displayed.  Alternatively, the <code class="docutils literal notranslate"><span class="pre">-</span></code> key can be used to
+decrement the displayed volume and the <code class="docutils literal notranslate"><span class="pre">+</span></code> or <code class="docutils literal notranslate"><span class="pre">=</span></code> keys can be used to
+increment it.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)[</span><span class="o">...</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">a</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">OrthoSlicer3D</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># doctest: +SKIP</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data</strong><span class="classifier">array-like</span></dt><dd><p>The data that will be displayed by the slicer. Should have 3+
+dimensions.</p>
+</dd>
+<dt><strong>affine</strong><span class="classifier">array-like or None, optional</span></dt><dd><p>Affine transform for the data. This is used to determine
+how the data should be sliced for plotting into the sagittal,
+coronal, and axial view axes. If None, identity is assumed.
+The aspect ratio of the data are inferred from the affine
+transform.</p>
+</dd>
+<dt><strong>axes</strong><span class="classifier">tuple of mpl.Axes or None, optional</span></dt><dd><p>3 or 4 axes instances for the 3 slices plus volumes,
+or None (default).</p>
+</dd>
+<dt><strong>title</strong><span class="classifier">str or None, optional</span></dt><dd><p>The title to display. Can be None (default) to display no
+title.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="method">
+<dt id="nibabel.viewers.OrthoSlicer3D.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>data</em>, <em>affine=None</em>, <em>axes=None</em>, <em>title=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.viewers.OrthoSlicer3D.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data</strong><span class="classifier">array-like</span></dt><dd><p>The data that will be displayed by the slicer. Should have 3+
+dimensions.</p>
+</dd>
+<dt><strong>affine</strong><span class="classifier">array-like or None, optional</span></dt><dd><p>Affine transform for the data. This is used to determine
+how the data should be sliced for plotting into the sagittal,
+coronal, and axial view axes. If None, identity is assumed.
+The aspect ratio of the data are inferred from the affine
+transform.</p>
+</dd>
+<dt><strong>axes</strong><span class="classifier">tuple of mpl.Axes or None, optional</span></dt><dd><p>3 or 4 axes instances for the 3 slices plus volumes,
+or None (default).</p>
+</dd>
+<dt><strong>title</strong><span class="classifier">str or None, optional</span></dt><dd><p>The title to display. Can be None (default) to display no
+title.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.viewers.OrthoSlicer3D.clim">
+<code class="descname">clim</code><a class="headerlink" href="#nibabel.viewers.OrthoSlicer3D.clim" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current color limits</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.viewers.OrthoSlicer3D.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.viewers.OrthoSlicer3D.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the viewer figures</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.viewers.OrthoSlicer3D.cmap">
+<code class="descname">cmap</code><a class="headerlink" href="#nibabel.viewers.OrthoSlicer3D.cmap" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current colormap</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.viewers.OrthoSlicer3D.draw">
+<code class="descname">draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.viewers.OrthoSlicer3D.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redraw the current image</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.viewers.OrthoSlicer3D.figs">
+<code class="descname">figs</code><a class="headerlink" href="#nibabel.viewers.OrthoSlicer3D.figs" title="Permalink to this definition">¶</a></dt>
+<dd><p>A tuple of the figure(s) containing the axes</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.viewers.OrthoSlicer3D.link_to">
+<code class="descname">link_to</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.viewers.OrthoSlicer3D.link_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Link positional changes between two canvases</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>other</strong><span class="classifier">instance of OrthoSlicer3D</span></dt><dd><p>Other viewer to use to link movements.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.viewers.OrthoSlicer3D.n_volumes">
+<code class="descname">n_volumes</code><a class="headerlink" href="#nibabel.viewers.OrthoSlicer3D.n_volumes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of volumes in the data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="nibabel.viewers.OrthoSlicer3D.position">
+<code class="descname">position</code><a class="headerlink" href="#nibabel.viewers.OrthoSlicer3D.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current coordinates</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.viewers.OrthoSlicer3D.set_position">
+<code class="descname">set_position</code><span class="sig-paren">(</span><em>x=None</em>, <em>y=None</em>, <em>z=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.viewers.OrthoSlicer3D.set_position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set current displayed slice indices</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>x</strong><span class="classifier">float | None</span></dt><dd><p>X coordinate to use. If None, do not change.</p>
+</dd>
+<dt><strong>y</strong><span class="classifier">float | None</span></dt><dd><p>Y coordinate to use. If None, do not change.</p>
+</dd>
+<dt><strong>z</strong><span class="classifier">float | None</span></dt><dd><p>Z coordinate to use. If None, do not change.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.viewers.OrthoSlicer3D.set_volume_idx">
+<code class="descname">set_volume_idx</code><span class="sig-paren">(</span><em>v</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.viewers.OrthoSlicer3D.set_volume_idx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set current displayed volume index</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>v</strong><span class="classifier">int</span></dt><dd><p>Volume index.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="nibabel.viewers.OrthoSlicer3D.show">
+<code class="descname">show</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.viewers.OrthoSlicer3D.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show the slicer in blocking mode; convenience for <code class="docutils literal notranslate"><span class="pre">plt.show()</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,232 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Neuroimaging in Python &#8212; NiBabel 2.5.0dev documentation</title>
+    <link rel="stylesheet" href="../_static/nibabel.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="fileholders" href="nibabel.fileholders.html" />
+    <link rel="prev" title="batteryrunners" href="nibabel.batteryrunners.html" />
+  <meta name="keywords" content="nipy, neuroimaging, python, neuroscience">
+
+  </head><body>
+<div style="background-color: white; text-align: left; padding-left: 150px; padding-bottom:50px; padding-top:20px; background-image: url(../_static/nipy-logo-bg-138x120.png); background-repeat: no-repeat;">
+<h1>NiBabel</h1>
+<h3 style="margin-top:-5px;color:#2f83c8">Access a cacophony of neuro-imaging file formats</h3>
+</div>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nibabel.fileholders.html" title="fileholders"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nibabel.batteryrunners.html" title="batteryrunners"
+             accesskey="P">previous</a> |</li>
+  <li><a href="http://nipy.org/">Community</a> |&nbsp;</li>
+  <li><a href="../index.html">NiBabel Home</a> |&nbsp;</li>
+  <li><a href="https://mail.python.org/mailman/listinfo/neuroimaging">Mailing list</a> |&nbsp;</li>
+  <li><a href="legal.html">License</a> |&nbsp;</li>
+
+          <li class="nav-item nav-item-1"><a href="../api.html" accesskey="U">API Documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dft</span></code></a><ul>
+<li><a class="reference internal" href="#cachingerror"><code class="xref py py-class docutils literal notranslate"><span class="pre">CachingError</span></code></a></li>
+<li><a class="reference internal" href="#dfterror"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFTError</span></code></a></li>
+<li><a class="reference internal" href="#instancestackerror"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstanceStackError</span></code></a></li>
+<li><a class="reference internal" href="#volumeerror"><code class="xref py py-class docutils literal notranslate"><span class="pre">VolumeError</span></code></a></li>
+<li><a class="reference internal" href="#clear-cache">clear_cache</a></li>
+<li><a class="reference internal" href="#get-studies">get_studies</a></li>
+<li><a class="reference internal" href="#update-cache">update_cache</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nibabel.batteryrunners.html"
+                        title="previous chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">batteryrunners</span></code></a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nibabel.fileholders.html"
+                        title="next chapter"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileholders</span></code></a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/reference/nibabel.dft.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nibabel.dft">
+<span id="dft"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">dft</span></code><a class="headerlink" href="#module-nibabel.dft" title="Permalink to this headline">¶</a></h1>
+<p>DICOM filesystem tools</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.dft.CachingError" title="nibabel.dft.CachingError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CachingError</span></code></a></p></td>
+<td><p>error while caching</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.dft.DFTError" title="nibabel.dft.DFTError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DFTError</span></code></a></p></td>
+<td><p>base class for DFT exceptions</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.dft.InstanceStackError" title="nibabel.dft.InstanceStackError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">InstanceStackError</span></code></a>(series, i, si)</p></td>
+<td><p>bad series of instance numbers</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.dft.VolumeError" title="nibabel.dft.VolumeError"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VolumeError</span></code></a></p></td>
+<td><p>unsupported volume parameter</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.dft.clear_cache" title="nibabel.dft.clear_cache"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_cache</span></code></a>()</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nibabel.dft.get_studies" title="nibabel.dft.get_studies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_studies</span></code></a>([base_dir, followlinks])</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nibabel.dft.update_cache" title="nibabel.dft.update_cache"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update_cache</span></code></a>(base_dir[, followlinks])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="cachingerror">
+<h2><a class="reference internal" href="#nibabel.dft.CachingError" title="nibabel.dft.CachingError"><code class="xref py py-class docutils literal notranslate"><span class="pre">CachingError</span></code></a><a class="headerlink" href="#cachingerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.dft.CachingError">
+<em class="property">class </em><code class="descclassname">nibabel.dft.</code><code class="descname">CachingError</code><a class="headerlink" href="#nibabel.dft.CachingError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nibabel.dft.DFTError" title="nibabel.dft.DFTError"><code class="xref py py-class docutils literal notranslate"><span class="pre">nibabel.dft.DFTError</span></code></a></p>
+<p>error while caching</p>
+<dl class="method">
+<dt id="nibabel.dft.CachingError.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.dft.CachingError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="dfterror">
+<h2><a class="reference internal" href="#nibabel.dft.DFTError" title="nibabel.dft.DFTError"><code class="xref py py-class docutils literal notranslate"><span class="pre">DFTError</span></code></a><a class="headerlink" href="#dfterror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.dft.DFTError">
+<em class="property">class </em><code class="descclassname">nibabel.dft.</code><code class="descname">DFTError</code><a class="headerlink" href="#nibabel.dft.DFTError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>base class for DFT exceptions</p>
+<dl class="method">
+<dt id="nibabel.dft.DFTError.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.dft.DFTError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="instancestackerror">
+<h2><a class="reference internal" href="#nibabel.dft.InstanceStackError" title="nibabel.dft.InstanceStackError"><code class="xref py py-class docutils literal notranslate"><span class="pre">InstanceStackError</span></code></a><a class="headerlink" href="#instancestackerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.dft.InstanceStackError">
+<em class="property">class </em><code class="descclassname">nibabel.dft.</code><code class="descname">InstanceStackError</code><span class="sig-paren">(</span><em>series</em>, <em>i</em>, <em>si</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.dft.InstanceStackError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nibabel.dft.DFTError" title="nibabel.dft.DFTError"><code class="xref py py-class docutils literal notranslate"><span class="pre">nibabel.dft.DFTError</span></code></a></p>
+<p>bad series of instance numbers</p>
+<dl class="method">
+<dt id="nibabel.dft.InstanceStackError.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>series</em>, <em>i</em>, <em>si</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.dft.InstanceStackError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="volumeerror">
+<h2><a class="reference internal" href="#nibabel.dft.VolumeError" title="nibabel.dft.VolumeError"><code class="xref py py-class docutils literal notranslate"><span class="pre">VolumeError</span></code></a><a class="headerlink" href="#volumeerror" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nibabel.dft.VolumeError">
+<em class="property">class </em><code class="descclassname">nibabel.dft.</code><code class="descname">VolumeError</code><a class="headerlink" href="#nibabel.dft.VolumeError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#nibabel.dft.DFTError" title="nibabel.dft.DFTError"><code class="xref py py-class docutils literal notranslate"><span class="pre">nibabel.dft.DFTError</span></code></a></p>
+<p>unsupported volume parameter</p>
+<dl class="method">
+<dt id="nibabel.dft.VolumeError.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>$self</em>, <em>/</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.dft.VolumeError.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize self.  See help(type(self)) for accurate signature.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="clear-cache">
+<h2>clear_cache<a class="headerlink" href="#clear-cache" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.dft.clear_cache">
+<code class="descclassname">nibabel.dft.</code><code class="descname">clear_cache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.dft.clear_cache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="get-studies">
+<h2>get_studies<a class="headerlink" href="#get-studies" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.dft.get_studies">
+<code class="descclassname">nibabel.dft.</code><code class="descname">get_studies</code><span class="sig-paren">(</span><em>base_dir=None</em>, <em>followlinks=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.dft.get_studies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="update-cache">
+<h2>update_cache<a class="headerlink" href="#update-cache" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="nibabel.dft.update_cache">
+<code class="descclassname">nibabel.dft.</code><code class="descname">update_cache</code><span class="sig-paren">(</span><em>base_dir</em>, <em>followlinks=False</em><span class="sig-paren">)</span><a class="headerlink" href="#nibabel.dft.update_cache" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2006-2019, Chris Markiewicz &lt;neuroimaging@python.org&gt;.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>
